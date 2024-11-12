@@ -32,6 +32,21 @@ public class UsuarioDAO {
         }
     }
 
+    public Usuario update(Usuario usuario){
+        EntityTransaction transaction = entityManager.getTransaction();
+        try {
+            transaction.begin();
+            Usuario usuarioAtualizado = entityManager.merge(usuario);
+            transaction.commit();
+            return usuarioAtualizado;
+        } catch (RuntimeException e) {
+            if (transaction.isActive()) {
+                transaction.rollback();
+            }
+            throw new RuntimeException("Falha ao atualizar o usuário", e); // Re-throw exception
+        }
+    }
+
     public void fechar() {
         entityManager.close();
         entityManagerFactory.close();

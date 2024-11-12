@@ -4,8 +4,7 @@ import jakarta.persistence.*;
 import java.time.LocalDate;
 import java.util.Date;
 
-@Entity
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@MappedSuperclass
 public abstract class Usuario {
 
     @Id //Pk db
