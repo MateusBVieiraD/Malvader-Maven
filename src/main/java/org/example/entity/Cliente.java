@@ -2,27 +2,33 @@ package org.example.entity;
 
 import jakarta.persistence.*;
 
-import java.time.LocalDate;
-import java.util.List;
-
 @Entity
-public class Cliente extends Usuario{
+public class Cliente {
 
-    @Column(name = "senha", nullable = false)
-    private String senha;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
 
-    @OneToMany(mappedBy = "conta")
-    private List<Cliente> clientes;
+    @OneToOne
+    @JoinColumn(name = "id_usuario")
+    private Usuario usuario;
 
     public Cliente() {
     }
 
-
-    public String getSenha() {
-        return senha;
+    public int getId() {
+        return id;
     }
 
-    public void setSenha(String senha) {
-        this.senha = senha;
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 }

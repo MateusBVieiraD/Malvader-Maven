@@ -4,46 +4,29 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.Persistence;
-import org.example.entity.Usuario;
+import org.example.entity.Funcionario;
 
-
-public class UsuarioDAO {
-
+public class FuncionarioDAO {
     private final EntityManagerFactory entityManagerFactory;
     private final EntityManager entityManager;
 
-    public UsuarioDAO() {
+    public FuncionarioDAO() {
         // Cria o EntityManagerFactory com base no nome da unidade de persistência
         entityManagerFactory = Persistence.createEntityManagerFactory("malvader");
         entityManager = entityManagerFactory.createEntityManager();
     }
 
-    public void salvar(Usuario usuario) {
+    public void salvar(Funcionario funcionario) {
         EntityTransaction transaction = entityManager.getTransaction();
         try {
             transaction.begin();
-            entityManager.persist(usuario);  // Persiste a entidade no banco
+            entityManager.persist(funcionario);
             transaction.commit();
         } catch (RuntimeException e) {
             if (transaction.isActive()) {
                 transaction.rollback();
             }
-            throw e; // Re-throw exception
-        }
-    }
-
-    public Usuario update(Usuario usuario){
-        EntityTransaction transaction = entityManager.getTransaction();
-        try {
-            transaction.begin();
-            Usuario usuarioAtualizado = entityManager.merge(usuario);
-            transaction.commit();
-            return usuarioAtualizado;
-        } catch (RuntimeException e) {
-            if (transaction.isActive()) {
-                transaction.rollback();
-            }
-            throw new RuntimeException("Falha ao atualizar o usuário", e); // Re-throw exception
+            throw e;
         }
     }
 

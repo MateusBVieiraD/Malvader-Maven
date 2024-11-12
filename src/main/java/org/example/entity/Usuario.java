@@ -1,28 +1,20 @@
 package org.example.entity;
+
 import jakarta.persistence.*;
 
-import java.time.LocalDate;
-import java.util.Date;
-
 @Entity
-@Inheritance(strategy = InheritanceType.JOINED)
 public class Usuario {
 
-    @Id //Pk db
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @Column(name = "nome", nullable = false)
-    private String nome;
-    @Column(name = "cpf")
-    private String cpf;
-    @Column(name = "data_nascimento")
-    Date dataNascimento;
-    @Column(name = "telefone")
-    private String telefone;
-    @Embedded
-    private Endereco endereco;
 
-    public Usuario() {}
+    @Column(name = "nome")
+    private String nome;
+
+    @Column(name = "senha")
+    private String senha;
+
 
 
     public int getId() {
@@ -41,47 +33,11 @@ public class Usuario {
         this.nome = nome;
     }
 
-    public String getCpf() {
-        return cpf;
+    public String getSenha() {
+        return senha;
     }
 
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
-    }
-
-    public Date getDataNascimento() {
-        return dataNascimento;
-    }
-
-    public void setDataNascimento(Date dataNascimento) {
-        this.dataNascimento = dataNascimento;
-    }
-
-    public String getTelefone() {
-        return telefone;
-    }
-
-    public void setTelefone(String telefone) {
-        this.telefone = telefone;
-    }
-
-    public Endereco getEndereco() {
-        return endereco;
-    }
-
-    public void setEndereco(Endereco endereco) {
-        this.endereco = endereco;
-    }
-
-    boolean login(String senha){
-        return true;
-    }
-
-    void logout(){
-
-    }
-
-    String consultarDados(){
-        return "";
+    public void setSenha(String senha) {
+        this.senha = senha;
     }
 }
