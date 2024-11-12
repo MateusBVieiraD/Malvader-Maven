@@ -4,8 +4,9 @@ import jakarta.persistence.*;
 import java.time.LocalDate;
 import java.util.Date;
 
-@MappedSuperclass
-public abstract class Usuario {
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
+public class Usuario {
 
     @Id //Pk db
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,16 +19,11 @@ public abstract class Usuario {
     Date dataNascimento;
     @Column(name = "telefone")
     private String telefone;
-    @OneToOne
-    @JoinColumn(name = "endereco_id")
+    @Embedded
     private Endereco endereco;
 
     public Usuario() {}
 
-    public Usuario(String nome, String cpf, LocalDate dataNascimento, String telefone) {
-
-        this.endereco = new Endereco();
-    }
 
     public int getId() {
         return id;
