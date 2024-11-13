@@ -30,6 +30,22 @@ public class ClienteDAO {
             throw e;
         }
     }
+
+    public Cliente update(Cliente cliente){
+        EntityTransaction transaction = entityManager.getTransaction();
+        try {
+            transaction.begin();
+            Cliente clienteAtualizado = entityManager.merge(cliente);
+            transaction.commit();
+            return clienteAtualizado;
+        } catch (RuntimeException e) {
+            if (transaction.isActive()) {
+                transaction.rollback();
+            }
+            throw new RuntimeException("Falha ao atualizar o cliente", e); // Re-throw exception
+        }
+    }
+
     public void fechar() {
         entityManager.close();
         entityManagerFactory.close();

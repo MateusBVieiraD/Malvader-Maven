@@ -1,28 +1,36 @@
 package org.example.entity;
 
 import jakarta.persistence.*;
+import org.example.modelo.Usuario;
+
 
 @Entity
-public class Funcionario {
+public class Funcionario extends Usuario {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private int id;
 
-    @Column(name = "cargo", nullable = false)
+    @Column(name = "cargo")
     private String cargo;
 
+    @Column(name = "codigo_funcionario")
+    private String codigoFuncionario;
+
     @OneToOne
-    @JoinColumn(name = "usuario_id", nullable = false)
-    private Usuario usuario;
+    @JoinColumn(name = "usuario_id", referencedColumnName = "id")
+    private UsuarioEntity usuario;
+
+    public Funcionario() {
+    }
 
     // Getters e Setters
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -34,11 +42,20 @@ public class Funcionario {
         this.cargo = cargo;
     }
 
-    public Usuario getUsuario() {
+    public UsuarioEntity getUsuario() {
         return usuario;
     }
 
-    public void setUsuario(Usuario usuario) {
+    public void setUsuario(UsuarioEntity usuario) {
         this.usuario = usuario;
     }
+
+    public String getCodigoFuncionario() {
+        return codigoFuncionario;
+    }
+
+    public void setCodigoFuncionario(String codigoFuncionario) {
+        this.codigoFuncionario = codigoFuncionario;
+    }
 }
+

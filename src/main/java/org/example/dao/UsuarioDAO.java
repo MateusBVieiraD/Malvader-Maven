@@ -4,8 +4,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.Persistence;
-import org.example.entity.Usuario;
-
+import org.example.entity.UsuarioEntity;
 
 public class UsuarioDAO {
 
@@ -18,7 +17,7 @@ public class UsuarioDAO {
         entityManager = entityManagerFactory.createEntityManager();
     }
 
-    public void salvar(Usuario usuario) {
+    public void salvar(UsuarioEntity usuario) {
         EntityTransaction transaction = entityManager.getTransaction();
         try {
             transaction.begin();
@@ -32,11 +31,11 @@ public class UsuarioDAO {
         }
     }
 
-    public Usuario update(Usuario usuario){
+    public UsuarioEntity update(UsuarioEntity usuario){
         EntityTransaction transaction = entityManager.getTransaction();
         try {
             transaction.begin();
-            Usuario usuarioAtualizado = entityManager.merge(usuario);
+            UsuarioEntity usuarioAtualizado = entityManager.merge(usuario);
             transaction.commit();
             return usuarioAtualizado;
         } catch (RuntimeException e) {

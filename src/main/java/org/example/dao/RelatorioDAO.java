@@ -4,49 +4,47 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.Persistence;
-import org.example.entity.Funcionario;
+import org.example.entity.Relatorio;
+import org.example.entity.UsuarioEntity;
 
-public class FuncionarioDAO {
+public class RelatorioDAO {
     private final EntityManagerFactory entityManagerFactory;
     private final EntityManager entityManager;
 
-    public FuncionarioDAO() {
+    public RelatorioDAO() {
         // Cria o EntityManagerFactory com base no nome da unidade de persistência
         entityManagerFactory = Persistence.createEntityManagerFactory("malvader");
         entityManager = entityManagerFactory.createEntityManager();
     }
 
-    public void salvar(Funcionario funcionario) {
+    public void salvar(Relatorio relatorio) {
         EntityTransaction transaction = entityManager.getTransaction();
         try {
             transaction.begin();
-            entityManager.persist(funcionario);
+            entityManager.persist(relatorio);  // Persiste a entidade no banco
             transaction.commit();
         } catch (RuntimeException e) {
             if (transaction.isActive()) {
                 transaction.rollback();
             }
-            throw e;
+            throw e; // Re-throw exception
         }
     }
 
-    public Funcionario update(Funcionario funcionario){
+    public Relatorio update(Relatorio relatorio){
         EntityTransaction transaction = entityManager.getTransaction();
         try {
             transaction.begin();
-            Funcionario funcionarioAtualizado = entityManager.merge(funcionario);
+            Relatorio relatorioAtualizado = entityManager.merge(relatorio);
             transaction.commit();
-            return funcionarioAtualizado;
+            return relatorioAtualizado;
         } catch (RuntimeException e) {
             if (transaction.isActive()) {
                 transaction.rollback();
             }
-            throw new RuntimeException("Falha ao atualizar o funcionário", e); // Re-throw exception
+            throw new RuntimeException("Falha ao atualizar o relatório", e); // Re-throw exception
         }
     }
-
-
-
 
     public void fechar() {
         entityManager.close();

@@ -1,17 +1,18 @@
 package org.example.entity;
 
 import jakarta.persistence.*;
+import org.example.modelo.Usuario;
 
 @Entity
-public class Cliente {
+public class Cliente extends Usuario {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @OneToOne
-    @JoinColumn(name = "id_usuario")
-    private Usuario usuario;
+    @JoinColumn(name = "usuario_id", referencedColumnName = "id")
+    private UsuarioEntity usuario;
 
     public Cliente() {
     }
@@ -24,11 +25,12 @@ public class Cliente {
         this.id = id;
     }
 
-    public Usuario getUsuario() {
+    public UsuarioEntity getUsuario() {
         return usuario;
     }
 
-    public void setUsuario(Usuario usuario) {
+    public void setUsuario(UsuarioEntity usuario) {
         this.usuario = usuario;
     }
 }
+

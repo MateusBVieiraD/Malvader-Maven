@@ -6,9 +6,16 @@
     <persistence-unit name="malvader">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 
-        <class>entity.Usuario</class>
+        <class>entity.UsuarioEntity</class>
         <class>entity.Funcionario</class>
         <class>entity.Cliente</class>
+        <class>entity.Endereco</class>
+        <class>entity.ContaEntity</class>
+        <class>entity.ContaCorrente</class>
+        <class>entity.ContaPoupanca</class>
+        <class>entity.Transacao</class>
+        <class>entity.Relatorio</class>
+
 
 
 

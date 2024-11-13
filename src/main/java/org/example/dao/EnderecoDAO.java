@@ -4,23 +4,23 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.Persistence;
-import org.example.entity.Funcionario;
+import org.example.entity.Endereco;
 
-public class FuncionarioDAO {
+public class EnderecoDAO {
     private final EntityManagerFactory entityManagerFactory;
     private final EntityManager entityManager;
 
-    public FuncionarioDAO() {
+    public EnderecoDAO() {
         // Cria o EntityManagerFactory com base no nome da unidade de persistência
         entityManagerFactory = Persistence.createEntityManagerFactory("malvader");
         entityManager = entityManagerFactory.createEntityManager();
     }
 
-    public void salvar(Funcionario funcionario) {
+    public void salvar(Endereco endereco) {
         EntityTransaction transaction = entityManager.getTransaction();
         try {
             transaction.begin();
-            entityManager.persist(funcionario);
+            entityManager.persist(endereco);
             transaction.commit();
         } catch (RuntimeException e) {
             if (transaction.isActive()) {
@@ -30,18 +30,18 @@ public class FuncionarioDAO {
         }
     }
 
-    public Funcionario update(Funcionario funcionario){
+    public Endereco update(Endereco endereco){
         EntityTransaction transaction = entityManager.getTransaction();
         try {
             transaction.begin();
-            Funcionario funcionarioAtualizado = entityManager.merge(funcionario);
+            Endereco enderecoAtualizado = entityManager.merge(endereco);
             transaction.commit();
-            return funcionarioAtualizado;
+            return enderecoAtualizado;
         } catch (RuntimeException e) {
             if (transaction.isActive()) {
                 transaction.rollback();
             }
-            throw new RuntimeException("Falha ao atualizar o funcionário", e); // Re-throw exception
+            throw new RuntimeException("Falha ao atualizar o endereco", e); // Re-throw exception
         }
     }
 
