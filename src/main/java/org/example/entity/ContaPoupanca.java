@@ -1,12 +1,13 @@
 package org.example.entity;
 
 import jakarta.persistence.*;
+import org.example.modelo.Conta;
 
 import java.math.BigDecimal;
 
 @Entity
 @Table(name = "conta_poupanca")
-public class ContaPoupanca {
+public class ContaPoupanca extends Conta {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
