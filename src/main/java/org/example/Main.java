@@ -2,14 +2,10 @@ package org.example;
 
 import org.example.config.EntityFactory;
 import org.example.controller.*;
-import org.example.dao.*;
 import org.example.entity.*;
-import org.example.modelo.Conta;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
-import java.text.DecimalFormat;
-import java.time.Instant;
 import java.time.LocalDate;
 
 public class Main {
@@ -109,6 +105,30 @@ public class Main {
 //transacao
         transacao.setConta(conta);
         transacaoController.cadastroTransacao(transacao);
+
+//teste update
+        relatorio.setTipoRelatorio("SAQUE");
+        relatorioController.atualizarRelatorio(relatorio);
+
+        usuario.setNome("Mateus");
+        usuarioController.atualizarUsuario(usuario);
+
+        funcionario.setCargo("Gerente");
+        funcionarioController.atualizarFuncionario(funcionario);
+
+        conta.setSaldo(BigDecimal.valueOf(540));
+        contaController.atualizarConta(conta);
+
+        endereco.setCep("456.789-00");
+        enderecoController.atualizarEndereco(endereco);
+
+        contaPoupanca.setTaxaRendimento(BigDecimal.valueOf(200));
+        contaPoupancaController.atualizarContaPoupanca(contaPoupanca);
+
+        contaCorrente.setLimite(BigDecimal.valueOf(2000));
+        contaCorrenteController.atualizarContaCorrente(contaCorrente);
+
+
 
 
         //Fechar a conexão com o banco

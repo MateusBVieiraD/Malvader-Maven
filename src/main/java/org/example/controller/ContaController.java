@@ -2,6 +2,7 @@ package org.example.controller;
 
 import org.example.dao.ContaDAO;
 import org.example.entity.ContaEntity;
+import org.example.entity.Relatorio;
 
 
 public class ContaController {
@@ -9,6 +10,10 @@ public class ContaController {
 
     public void cadastroConta(ContaEntity conta){
         contaDao.salvar(conta);
+    }
+
+    public ContaEntity atualizarConta(ContaEntity contaEntity){
+        return contaDao.update(contaEntity);
     }
 
     public void fecharOperacao(){

@@ -10,6 +10,10 @@ public class RelatorioController {
         relatorioDao.salvar(relatorio);
     }
 
+    public Relatorio atualizarRelatorio(Relatorio relatorio){
+         return relatorioDao.update(relatorio);
+    }
+
     public void fecharOperacao(){
         relatorioDao.fechar();
     }
