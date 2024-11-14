@@ -1,5 +1,7 @@
 package org.example;
 
+import org.example.config.EntityFactory;
+import org.example.controller.*;
 import org.example.dao.*;
 import org.example.entity.*;
 import org.example.modelo.Conta;
@@ -14,15 +16,15 @@ public class Main {
 
     public static void main(String[] args) {
 
-        FuncionarioDAO funcionarioDAO = new FuncionarioDAO();
-        ClienteDAO clienteDAO = new ClienteDAO();
-        UsuarioDAO usuarioDAO = new UsuarioDAO();
-        EnderecoDAO enderecoDAO = new EnderecoDAO();
-        ContaDAO contaDAO = new ContaDAO();
-        ContaCorrenteDAO contaCorrenteDAO = new ContaCorrenteDAO();
-        ContaPoupancaDAO contaPoupancaDAO = new ContaPoupancaDAO();
-        RelatorioDAO relatorioDAO = new RelatorioDAO();
-        TransacaoDAO transacaoDAO = new TransacaoDAO();
+        FuncionarioController funcionarioController = new FuncionarioController();
+        ClienteController clienteController = new ClienteController();
+        UsuarioController usuarioController = new UsuarioController();
+        EnderecoController enderecoController = new EnderecoController();
+        ContaController contaController = new ContaController();
+        ContaCorrenteController contaCorrenteController = new ContaCorrenteController();
+        ContaPoupancaController contaPoupancaController = new ContaPoupancaController();
+        RelatorioController relatorioController = new RelatorioController();
+        TransacaoController transacaoController = new TransacaoController();
 
 
 // Criando um novo funcionário
@@ -73,52 +75,54 @@ public class Main {
 
 
 //Start de usuario
-        usuarioDAO.salvar(usuario);
+        usuarioController.cadastroUsuario(usuario);
 
 //Usuario ou é funcionario
         funcionario.setUsuario(usuario);
-        funcionarioDAO.salvar(funcionario);
+        funcionarioController.cadastroFuncionario(funcionario);
 //Ou cliente
         cliente.setUsuario(usuario);
-        clienteDAO.salvar(cliente);
+        clienteController.cadastroCliente(cliente);
 
 //após processamento do endereço
         endereco.setUsuario(usuario);
-        enderecoDAO.salvar(endereco);
+        enderecoController.cadastroEndereco(endereco);
 
 //depois acesso a conta
         conta.setCliente(cliente);
-        contaDAO.salvar(conta);
+        contaController.cadastroConta(conta);
 
         conta2.setCliente(cliente);
-        contaDAO.salvar(conta2);
+        contaController.cadastroConta(conta2);
 
 //conta corrente
         contaCorrente.setConta(conta);
-        contaCorrenteDAO.salvar(contaCorrente);
+        contaCorrenteController.cadastroContaCorrente(contaCorrente);
 //conta poupanca
         contaPoupanca.setConta(conta2);
-        contaPoupancaDAO.salvar(contaPoupanca);
+        contaPoupancaController.cadastroContaPoupanca(contaPoupanca);
 
 //relatorio
         relatorio.setFuncionario(funcionario);
-        relatorioDAO.salvar(relatorio);
+        relatorioController.cadastroRelatorio(relatorio);
 
 //transacao
         transacao.setConta(conta);
-        transacaoDAO.salvar(transacao);
+        transacaoController.cadastroTransacao(transacao);
 
 
         //Fechar a conexão com o banco
 
-        funcionarioDAO.fechar();
-        clienteDAO.fechar();
-        usuarioDAO.fechar();
-        enderecoDAO.fechar();
-        contaDAO.fechar();
-        contaCorrenteDAO.fechar();
-        contaPoupancaDAO.fechar();
-        relatorioDAO.fechar();
-        transacaoDAO.fechar();
+        funcionarioController.fecharOperacao();
+        clienteController.fecharOperacao();
+        usuarioController.fecharOperacao();
+        enderecoController.fecharOperacao();
+        contaController.fecharOperacao();
+        contaCorrenteController.fecharOperacao();
+        contaPoupancaController.fecharOperacao();
+        relatorioController.fecharOperacao();
+        transacaoController.fecharOperacao();
+
+        EntityFactory.fechar();
     }
 }

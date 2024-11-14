@@ -4,17 +4,16 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.Persistence;
+import org.example.config.EntityFactory;
 import org.example.entity.Transacao;
 import org.example.entity.UsuarioEntity;
 
 public class TransacaoDAO {
-    private final EntityManagerFactory entityManagerFactory;
     private final EntityManager entityManager;
 
     public TransacaoDAO() {
         // Cria o EntityManagerFactory com base no nome da unidade de persistência
-        entityManagerFactory = Persistence.createEntityManagerFactory("malvader");
-        entityManager = entityManagerFactory.createEntityManager();
+        entityManager = EntityFactory.getEntityManager();
     }
 
     public void salvar(Transacao transacao) {
@@ -33,6 +32,5 @@ public class TransacaoDAO {
 
     public void fechar() {
         entityManager.close();
-        entityManagerFactory.close();
     }
 }
