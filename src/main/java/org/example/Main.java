@@ -1,16 +1,18 @@
 package org.example;
 
+import org.example.bancoController.HibernateToCSV;
 import org.example.config.EntityFactory;
 import org.example.controller.*;
 import org.example.entity.*;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
 
         FuncionarioController funcionarioController = new FuncionarioController();
         ClienteController clienteController = new ClienteController();
@@ -128,7 +130,8 @@ public class Main {
         contaCorrente.setLimite(BigDecimal.valueOf(2000));
         contaCorrenteController.atualizarContaCorrente(contaCorrente);
 
-
+        HibernateToCSV hibernateToCSV = new HibernateToCSV();
+        hibernateToCSV.exportarParaCSV();
 
 
         //Fechar a conexão com o banco

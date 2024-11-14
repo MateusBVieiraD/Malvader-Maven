@@ -21,7 +21,7 @@ public class homeView extends JFrame {
         frame.setLocationRelativeTo(null);
 
 
-        frame.setLayout(new FlowLayout());
+        frame.setLayout(new BorderLayout());
 
 
 
