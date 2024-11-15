@@ -4,16 +4,31 @@ import org.example.bancoController.HibernateToCSV;
 import org.example.config.EntityFactory;
 import org.example.controller.*;
 import org.example.entity.*;
+import org.example.view.*;
 
+import javax.swing.*;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 
-public class Main {
+public class Main extends JFrame {
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
 
+
+        var view = new homeView();
+
+
+
+
+
+
+
+
+
+
+/*
         FuncionarioController funcionarioController = new FuncionarioController();
         ClienteController clienteController = new ClienteController();
         UsuarioController usuarioController = new UsuarioController();
@@ -130,6 +145,7 @@ public class Main {
         contaCorrente.setLimite(BigDecimal.valueOf(2000));
         contaCorrenteController.atualizarContaCorrente(contaCorrente);
 
+        // Não sei o porque, mas ele tá dando error kkkkk
         HibernateToCSV hibernateToCSV = new HibernateToCSV();
         hibernateToCSV.exportarParaCSV();
 
@@ -147,5 +163,6 @@ public class Main {
         transacaoController.fecharOperacao();
 
         EntityFactory.fechar();
+        */
     }
 }

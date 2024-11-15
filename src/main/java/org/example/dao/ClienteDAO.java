@@ -9,6 +9,7 @@ import org.example.config.EntityFactory;
 import org.example.entity.Cliente;
 
 public class ClienteDAO {
+
     private final EntityManager entityManager;
 
     public ClienteDAO() {
