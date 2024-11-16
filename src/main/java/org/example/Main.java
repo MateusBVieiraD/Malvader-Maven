@@ -16,8 +16,7 @@ public class Main extends JFrame {
 
     public static void main(String[] args) {
 
-
-        var view = new homeView();
+        var view = new Frame();
 
 
 
