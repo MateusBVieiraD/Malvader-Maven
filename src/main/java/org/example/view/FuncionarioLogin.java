@@ -1,7 +1,12 @@
 package org.example.view;
 
+import org.example.controller.ClienteController;
+import org.example.controller.FuncionarioController;
+
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class FuncionarioLogin extends JPanel {
     public FuncionarioLogin(Frame frame){
@@ -38,6 +43,20 @@ public class FuncionarioLogin extends JPanel {
         botaoLoginFuncionario.setBounds(10, 150, 80, 30);
         add(botaoLoginFuncionario);
 
-        botaoLoginFuncionario.addActionListener(e -> frame.Show("MenuFuncionario"));
+        botaoLoginFuncionario.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String login = funcionarioLogin.getText();
+                String senha = new String(funcionarioSenha.getPassword());
+                var funcionarioControl = new FuncionarioController();
+                if(funcionarioControl.login(login, senha)){
+                    frame.Show("MenuFuncionario");
+                } else{
+                    JOptionPane.showMessageDialog(frame, "Usuário ou senha inválido!");
+                    frame.Show("Home");
+                }
+                funcionarioSenha.setText("");
+            }
+        });
     }
 }

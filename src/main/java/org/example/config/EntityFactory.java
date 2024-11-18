@@ -3,6 +3,8 @@ package org.example.config;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
+import jakarta.persistence.TypedQuery;
+import org.example.entity.UsuarioEntity;
 
 public class EntityFactory {
     //Instancia de um Singleton
@@ -31,4 +33,6 @@ public class EntityFactory {
             entityManagerFactory.close();
         }
     }
+
+
 }

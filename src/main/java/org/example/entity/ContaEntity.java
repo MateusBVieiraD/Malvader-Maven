@@ -22,7 +22,7 @@ public class ContaEntity {
     @Enumerated(EnumType.STRING)
     private TipoConta tipoconta;
     @ManyToOne
-    @JoinColumn
+    @JoinColumn(name = "cliente_id")
     private Cliente cliente;
 
     public ContaEntity() {}
@@ -74,5 +74,14 @@ public class ContaEntity {
 
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
+    }
+
+    public void adicionarSaldo(double saldo) {
+        this.saldo = this.saldo.add(BigDecimal.valueOf(saldo));
+    }
+
+
+    public void sacarSaldo(double valor) {
+        this.saldo = this.saldo.subtract(BigDecimal.valueOf(valor));
     }
 }

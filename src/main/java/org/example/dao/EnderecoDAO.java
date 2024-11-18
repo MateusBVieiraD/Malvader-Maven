@@ -46,8 +46,6 @@ public class EnderecoDAO {
     }
 
 
-
-
     public void fechar() {
         entityManager.close();
     }

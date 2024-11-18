@@ -1,24 +1,22 @@
 package org.example.view;
 
 import org.example.controller.ClienteController;
-import org.example.controller.UsuarioController;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class ClienteLogin extends JPanel {
-    public ClienteLogin(Frame frame){
+public class ConfirmarLogin extends JPanel {
+    public ConfirmarLogin(Frame frame){
+        var clienteLog = new ClienteLogin(null);
 
-        // Configurações
         setLayout(null);
-        setSize(500, 400);
+        setSize(900, 900);
         setBackground(new Color(255, 255, 255));
 
         // Botões
-        var botaoLoginCliente = new JButton("Login");
-        var botaoCadastroCliente = new JButton("Registrar");
+        var botaoLoginCliente = new JButton("Confirmar login");
 
         // Textos
         var clienteTextLabel = new JLabel("Usuário");
@@ -30,13 +28,14 @@ public class ClienteLogin extends JPanel {
         var clienteSenha = new JPasswordField(20);
 
         // Configurando as bounds
-        clienteTextLogin.setBounds(250, 10, 80, 25);
+        clienteTextLogin.setBounds(250, 10, 350, 25);
         add(clienteTextLogin);
 
         clienteTextLabel.setBounds(10, 25, 80, 25);
         add(clienteTextLabel);
 
         clienteLogin.setBounds(10, 50, 165, 25);
+        clienteLogin.setEditable(false);
         add(clienteLogin);
 
         clienteTextPassword.setBounds(10, 75, 80, 25);
@@ -48,27 +47,20 @@ public class ClienteLogin extends JPanel {
         botaoLoginCliente.setBounds(10, 150, 80, 30);
         add(botaoLoginCliente);
 
-        botaoCadastroCliente.setBounds(10, 200, 80, 30);
-        add(botaoCadastroCliente);
-
-        Sessao.user = clienteLogin.getText();
-
         botaoLoginCliente.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String usuario = clienteLogin.getText();
+                String login = clienteLogin.getText();
                 String senha = new String(clienteSenha.getPassword());
                 var clienteControl = new ClienteController();
-                if(clienteControl.login(usuario, senha)){
-                    frame.Show("MenuCliente");
+                if(clienteControl.login(login, senha)){
+                    frame.Show("Depositar");
                 } else{
-                    JOptionPane.showMessageDialog(frame, "Usuário ou senha inválido!");
-                    frame.Show("Home");
+                    JOptionPane.showMessageDialog(frame, "Senha inválida!");
+                    frame.Show("MenuCliente");
                 }
                 clienteSenha.setText("");
             }
         });
-
-        botaoCadastroCliente.addActionListener(e -> frame.Show("CadastroCliente"));
     }
 }

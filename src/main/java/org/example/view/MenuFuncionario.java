@@ -39,6 +39,8 @@ public class MenuFuncionario extends JPanel {
         sairFB.setBounds(175, 180, 150, 30);
         add(sairFB);
 
+        aberturaFB.addActionListener(e -> frame.Show("ContaFuncionario"));
+
         sairFB.addActionListener(e -> frame.Show("Home"));
     }
 }

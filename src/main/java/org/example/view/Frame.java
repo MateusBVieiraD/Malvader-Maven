@@ -40,6 +40,11 @@ public class Frame extends JFrame {
         var cadastroCliente = new CadastroCliente(this);
         var menuFuncionario = new MenuFuncionario(this);
         var menuCliente = new MenuCliente(this);
+        var contaFuncionario = new ContaFuncionario(this);
+        var contaCorrenteF = new ContaCorrenteF(this);
+        var contaPoupancaF = new ContaPoupancaF(this);
+        var confirmarLogin = new ConfirmarLogin(this);
+        var deposito = new Depositar(this);
 
         // CardLayout:
         cardLayout = new CardLayout();
@@ -63,6 +68,11 @@ public class Frame extends JFrame {
         container.add(cadastroCliente, "CadastroCliente");
         container.add(menuFuncionario, "MenuFuncionario");
         container.add(menuCliente, "MenuCliente");
+        container.add(contaFuncionario, "ContaFuncionario");
+        container.add(contaPoupancaF, "ContaPoupancaF");
+        container.add(contaCorrenteF, "ContaCorrenteF");
+        container.add(confirmarLogin, "ConfirmarLogin");
+        container.add(deposito, "Depositar");
 
         // Adicionando o Panel ao Frame
         add(container);
@@ -87,5 +97,10 @@ public class Frame extends JFrame {
     }
     public void Show(String nomePainel){
         cardLayout.show(container, nomePainel);
+    }
+
+    public void resizeFrame(int width, int height){
+        setSize(width, height);
+        setLocationRelativeTo(null);
     }
 }

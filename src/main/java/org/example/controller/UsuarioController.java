@@ -1,8 +1,12 @@
 package org.example.controller;
 
 import org.example.dao.UsuarioDAO;
-import org.example.entity.Relatorio;
+
 import org.example.entity.UsuarioEntity;
+
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 
 public class UsuarioController {
     private final UsuarioDAO usuarioDao = new UsuarioDAO();
@@ -18,4 +22,16 @@ public class UsuarioController {
     public void fecharOperacao(){
         usuarioDao.fechar();
     }
+
+    public boolean login(String user, String senha){
+        if(user.isEmpty() || user.equals(" ")){
+            return false;
+        }else if (senha.isEmpty() || senha.equals(" ")){
+            return false;
+        }else{
+            return usuarioDao.validarUsuario(user, senha);
+        }
+    }
+
+
 }

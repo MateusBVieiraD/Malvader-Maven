@@ -2,6 +2,8 @@ package org.example.view;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class ContaFuncionario extends JPanel {
     public ContaFuncionario(Frame frame){
@@ -22,6 +24,21 @@ public class ContaFuncionario extends JPanel {
 
         sairCF.setBounds(150, 90, 200, 30);
         add(sairCF);
+
+        contaPF.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frame.Show("ContaPoupancaF");
+                frame.resizeFrame(900, 900);
+            }
+        });
+        contaCF.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frame.Show("ContaCorrenteF");
+                frame.resizeFrame(900, 900);
+            }
+        });
 
         sairCF.addActionListener(e -> frame.Show("MenuFuncionario"));
     }

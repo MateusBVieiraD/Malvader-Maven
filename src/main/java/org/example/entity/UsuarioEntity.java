@@ -1,8 +1,11 @@
 package org.example.entity;
 
 import jakarta.persistence.*;
+import org.example.config.EntityFactory;
+import org.example.modelo.Usuario;
 
 import java.time.LocalDate;
+import java.util.List;
 
 /**
  * Diferente da classe base essa Entidade não deve ser herdada. Serve para persistir Usuarios.
@@ -92,4 +95,18 @@ public class UsuarioEntity {
     public void setTipoUsuario(TipoUsuario tipoUsuario) {
         this.tipoUsuario = tipoUsuario;
     }
+
+    @Override
+    public String toString() {
+        return "UsuarioEntity{" +
+                "id=" + id +
+                ", nome='" + nome + '\'' +
+                ", cpf='" + cpf + '\'' +
+                ", senha='" + senha + '\'' +
+                ", dataNascimento=" + dataNascimento +
+                ", telefone='" + telefone + '\'' +
+                ", tipoUsuario=" + tipoUsuario +
+                '}';
+    }
+    
 }

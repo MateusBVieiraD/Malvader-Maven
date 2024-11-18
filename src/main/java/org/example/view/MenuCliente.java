@@ -2,9 +2,12 @@ package org.example.view;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class MenuCliente extends JPanel {
     public MenuCliente(Frame frame){
+        var loginCliente = new ClienteLogin(null);
 
         setLayout(null);
         setSize(500, 400);
@@ -34,6 +37,8 @@ public class MenuCliente extends JPanel {
 
         sairCB.setBounds(150, 180, 200, 30);
         add(sairCB);
+
+        depositoCB.addActionListener(e -> frame.Show("ConfirmarLogin"));
 
         sairCB.addActionListener(e -> frame.Show("Home"));
     }
