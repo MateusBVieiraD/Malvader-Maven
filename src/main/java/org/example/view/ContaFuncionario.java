@@ -5,6 +5,7 @@ import java.awt.*;
 
 public class ContaFuncionario extends JPanel {
     public ContaFuncionario(Frame frame){
+
         setLayout(null);
         setSize(500, 400);
         setBackground(new Color(255, 255, 255));

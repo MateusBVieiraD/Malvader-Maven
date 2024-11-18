@@ -5,6 +5,7 @@ import java.awt.*;
 
 public class CadastroCliente extends JPanel {
     public CadastroCliente(Frame frame) {
+
         // Configurações
         setLayout(null);
         setSize(500, 400);

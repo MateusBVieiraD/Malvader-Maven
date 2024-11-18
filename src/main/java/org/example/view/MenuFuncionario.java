@@ -5,6 +5,7 @@ import java.awt.*;
 
 public class MenuFuncionario extends JPanel {
     public MenuFuncionario(Frame frame) {
+
         setLayout(null);
         setSize(500, 400);
         setBackground(new Color(255, 255, 255));

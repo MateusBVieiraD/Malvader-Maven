@@ -12,7 +12,7 @@ import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 
-public class Main extends JFrame {
+public class Main {
 
     public static void main(String[] args) {
 

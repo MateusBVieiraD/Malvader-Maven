@@ -5,6 +5,7 @@ import java.awt.*;
 
 public class MenuCliente extends JPanel {
     public MenuCliente(Frame frame){
+
         setLayout(null);
         setSize(500, 400);
         setBackground(new Color(255, 255, 255));
