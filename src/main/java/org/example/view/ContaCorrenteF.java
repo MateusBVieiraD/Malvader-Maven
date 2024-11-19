@@ -1,17 +1,18 @@
 package org.example.view;
 
-import org.example.entity.ContaCorrente;
 
 import javax.swing.*;
+import javax.swing.text.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.text.ParseException;
 
 public class ContaCorrenteF extends JPanel {
-    public ContaCorrenteF(Frame frame){
+    public ContaCorrenteF(Frame frame) {
         setLayout(null);
         setSize(900, 900);
         setBackground(new Color(255, 255, 255));
+
+
 
         var titulo = new JLabel("Criar conta corrente");
         var agencia = new JLabel("Agência:");
@@ -35,10 +36,40 @@ public class ContaCorrenteF extends JPanel {
         var limiteC = new JTextField();
         var vencimento = new JTextField();
         var nomeText = new JTextField();
-        var cpfText = new JTextField();
+
+        JFormattedTextField cpfText;
+        try {
+
+            MaskFormatter cpfmask = new MaskFormatter("###.###.###-##");
+            cpfText = new JFormattedTextField(cpfmask);
+            cpfText.setColumns(15);
+
+            PlainDocument doc = (PlainDocument) cpfText.getDocument();
+            doc.setDocumentFilter(new NumericDocumentFilter());
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+
         var nascimentoText = new JTextField();
-        var telefoneText = new JTextField();
-        var cepText = new JTextField();
+
+            JFormattedTextField telefoneText;
+        try {
+            MaskFormatter telefoneMask = new MaskFormatter("(##)#####-####");
+            telefoneText = new JFormattedTextField(telefoneMask);
+            telefoneText.setColumns(14);
+        }catch (ParseException e){
+            throw new RuntimeException(e);
+        }
+
+            JFormattedTextField cepText;
+        try {
+            MaskFormatter cepTextMask = new MaskFormatter("#####-###");
+            cepText = new JFormattedTextField(cepTextMask);
+            cepText.setColumns(15);
+        }catch (Exception e){
+            throw new RuntimeException(e);
+        }
+
         var localText = new JTextField();
         var numeroCasaText = new JTextField();
         var bairroText = new JTextField();
@@ -148,12 +179,12 @@ public class ContaCorrenteF extends JPanel {
         criarBotao.setBounds(10, 800, 80, 30);
         add(criarBotao);
 
-        botaoVoltar.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                frame.Show("ContaFuncionario");
-                frame.resizeFrame(500, 400);
-            }
+        botaoVoltar.addActionListener(e -> {
+            frame.Show("ContaFuncionario");
+            frame.resizeFrame(500, 400);
         });
+
+
+
     }
 }

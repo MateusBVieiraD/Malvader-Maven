@@ -3,9 +3,46 @@ package org.example.view;
 import org.example.entity.ContaPoupanca;
 
 import javax.swing.*;
+import javax.swing.text.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.ParseException;
+
+class NumericDocumentFilter extends DocumentFilter {
+    @Override
+    public void insertString(FilterBypass fb, int offset, String string, AttributeSet attr) throws BadLocationException {
+        if (string != null && string.matches("\\d+")) { // Permite apenas números
+            super.insertString(fb, offset, string, attr);
+        } else {
+            showPopup();
+        }
+    }
+
+    @Override
+    public void replace(FilterBypass fb, int offset, int length, String text, AttributeSet attrs) throws BadLocationException {
+        if (text != null && text.matches("\\d+")) { // Permite apenas números
+            super.replace(fb, offset, length, text, attrs);
+        } else {
+            showPopup();
+        }
+    }
+
+    @Override
+    public void remove(FilterBypass fb, int offset, int length) throws BadLocationException {
+        super.remove(fb, offset, length);
+    }
+
+    // Método para exibir o popup
+    private void showPopup() {
+        SwingUtilities.invokeLater(() ->
+                JOptionPane.showMessageDialog(null,
+                        "Por favor, insira apenas números!",
+                        "Entrada Inválida",
+                        JOptionPane.WARNING_MESSAGE)
+        );
+    }
+}
 
 public class ContaPoupancaF extends JPanel {
     public ContaPoupancaF(Frame frame){
@@ -33,10 +70,40 @@ public class ContaPoupancaF extends JPanel {
         var numeroContaText = new JTextField();
         var rendimentoTaxa = new JTextField();
         var nomeText = new JTextField();
-        var cpfText = new JTextField();
+
+        JFormattedTextField cpfText;
+        try {
+
+            MaskFormatter cpfmask = new MaskFormatter("###.###.###-##");
+            cpfText = new JFormattedTextField(cpfmask);
+            cpfText.setColumns(15);
+
+            PlainDocument doc = (PlainDocument) cpfText.getDocument();
+            doc.setDocumentFilter(new org.example.view.NumericDocumentFilter());
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+
         var nascimentoText = new JTextField();
-        var telefoneText = new JTextField();
-        var cepText = new JTextField();
+
+        JFormattedTextField telefoneText;
+        try {
+            MaskFormatter telefoneMask = new MaskFormatter("(##)#####-####");
+            telefoneText = new JFormattedTextField(telefoneMask);
+            telefoneText.setColumns(14);
+        }catch (ParseException e){
+            throw new RuntimeException(e);
+        }
+
+        JFormattedTextField cepText;
+        try {
+            MaskFormatter cepTextMask = new MaskFormatter("#####-###");
+            cepText = new JFormattedTextField(cepTextMask);
+            cepText.setColumns(15);
+        }catch (Exception e){
+            throw new RuntimeException(e);
+        }
+
         var localText = new JTextField();
         var numeroCasaText = new JTextField();
         var bairroText = new JTextField();

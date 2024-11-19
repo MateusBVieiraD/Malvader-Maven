@@ -2,6 +2,8 @@ package org.example.controller;
 
 import org.example.dao.UsuarioDAO;
 
+import org.example.entity.TipoConta;
+import org.example.entity.TipoUsuario;
 import org.example.entity.UsuarioEntity;
 
 
@@ -23,15 +25,14 @@ public class UsuarioController {
         usuarioDao.fechar();
     }
 
-    public boolean login(String user, String senha){
+    public boolean login(String user, String senha, TipoUsuario tipoUsuario){
         if(user.isEmpty() || user.equals(" ")){
             return false;
         }else if (senha.isEmpty() || senha.equals(" ")){
             return false;
         }else{
-            return usuarioDao.validarUsuario(user, senha);
+            return usuarioDao.validarUsuario(user, senha, tipoUsuario);
         }
     }
-
 
 }

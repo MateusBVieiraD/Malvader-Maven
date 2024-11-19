@@ -21,7 +21,7 @@ public class ContaCorrenteDAO {
         EntityTransaction transaction = entityManager.getTransaction();
         try {
             transaction.begin();
-            entityManager.persist(contaCorrente);  // Persiste a entidade no banco
+            entityManager.persist(contaCorrente);
             transaction.commit();
         } catch (RuntimeException e) {
             if (transaction.isActive()) {
@@ -45,6 +45,8 @@ public class ContaCorrenteDAO {
             throw new RuntimeException("Falha ao atualizar a conta", e); // Re-throw exception
         }
     }
+
+    //public void criarContaCorrente(int id, limite)
 
     public void fechar() {
         entityManager.close();

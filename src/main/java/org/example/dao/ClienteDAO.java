@@ -11,23 +11,24 @@ import org.example.modelo.Usuario;
 import java.util.List;
 
 public class ClienteDAO {
-
     private final EntityManager entityManager;
 
     public ClienteDAO() {
-        // Cria o EntityManagerFactory com base no nome da unidade de persistência
+
         entityManager = EntityFactory.getEntityManager();
     }
 
-    public void salvar(Cliente cliente) {
+    public int salvar(Cliente cliente) {
         EntityTransaction transaction = entityManager.getTransaction();
         try {
             transaction.begin();
             entityManager.persist(cliente);
             transaction.commit();
+            return cliente.getId();
         } catch (RuntimeException e) {
             if (transaction.isActive()) {
                 transaction.rollback();
+                return -1;
             }
             throw e;
         }
@@ -36,10 +37,12 @@ public class ClienteDAO {
     public Cliente update(Cliente cliente){
         EntityTransaction transaction = entityManager.getTransaction();
         try {
+
             transaction.begin();
             Cliente clienteAtualizado = entityManager.merge(cliente);
             transaction.commit();
             return clienteAtualizado;
+
         } catch (RuntimeException e) {
             if (transaction.isActive()) {
                 transaction.rollback();
@@ -48,22 +51,25 @@ public class ClienteDAO {
         }
     }
 
-    public Cliente buscarPorId(Long id) {
-        return entityManager.find(Cliente.class, id);
+
+    public int criarCliente(int id){
+        Cliente cliente = new Cliente();
+        UsuarioEntity usuario = entityManager.find(UsuarioEntity.class, id);
+        cliente.setUsuario(usuario);
+        ClienteDAO clienteDAO = new ClienteDAO();
+        int retornoId = clienteDAO.salvar(cliente);
+        return retornoId;
     }
 
-    public static int consultarDados(String user, String password){
+    public int buscarporId(String user, String password){
 
-        var a = EntityFactory.getEntityManager();
-
-        TypedQuery<UsuarioEntity> query = a.createQuery("SELECT u FROM UsuarioEntity u WHERE u.senha = :senha AND u.nome = :nome" , UsuarioEntity.class);
+        TypedQuery<UsuarioEntity> query = entityManager.createQuery("SELECT u FROM UsuarioEntity u WHERE u.senha = :senha AND u.nome = :nome" , UsuarioEntity.class);
         query.setParameter("senha", password);
         query.setParameter("nome", user);
 
         UsuarioEntity test = query.getSingleResult();
-        int id = test.getId();
 
-        System.out.println(id);
+        int id = test.getId();
 
         return id;
 
@@ -75,5 +81,5 @@ public class ClienteDAO {
 
     public void fechar() {
         entityManager.close();
-        }
+    }
 }

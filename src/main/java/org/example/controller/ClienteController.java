@@ -4,6 +4,8 @@ import org.example.dao.ClienteDAO;
 import org.example.dao.ContaDAO;
 import org.example.dao.UsuarioDAO;
 import org.example.entity.Cliente;
+import org.example.entity.TipoUsuario;
+
 import java.io.File;
 
 
@@ -18,13 +20,13 @@ public class ClienteController {
         clienteDAO.salvar(cliente);
     }
 
-    public boolean login(String user, String senha){
+    public boolean login(String user, String senha, TipoUsuario tipoUsuario){
         if(user.isEmpty() || user.equals(" ")){
             return false;
         }else if (senha.isEmpty() || senha.equals(" ")){
             return false;
         }else{
-            return usuarioDao.validarUsuario(user, senha);
+            return usuarioDao.validarUsuario(user, senha, tipoUsuario);
         }
     }
 
@@ -32,49 +34,55 @@ public class ClienteController {
         clienteDAO.fechar();
     }
 
+
     public void depositar(String user, String password, double valor){
-        int retorno3 = ContaDAO.verificarContaRelacionada(UsuarioDAO.consultarClienteRelacionado(ClienteDAO.consultarDados(user,password)));
+
+        ClienteDAO clienteDAO1 = new ClienteDAO();
+        int retorno3 = ContaDAO.verificarContaRelacionada(usuarioDao.consultarClienteRelacionado(clienteDAO.buscarporId(user,password)));
         ContaDAO.atualizarSaldo(retorno3,valor);
     }
 
     public void saque(String user,String password,double valor){
-        int retorno3 = ContaDAO.verificarContaRelacionada(UsuarioDAO.consultarClienteRelacionado(ClienteDAO.consultarDados(user,password)));
+        int retorno3 = ContaDAO.verificarContaRelacionada(usuarioDao.consultarClienteRelacionado(clienteDAO.buscarporId(user,password)));
         ContaDAO.sacarSaldo(retorno3, valor);
     }
 
     public void saldo(String user, String password, double valor){
         UsuarioDAO usuarioDAO = new UsuarioDAO();
 
-        if (usuarioDAO.validarUsuario(user, password)){
-        int retorno3 = ContaDAO.verificarContaRelacionada(UsuarioDAO.consultarClienteRelacionado(ClienteDAO.consultarDados(user,password)));
-        BigDecimal retorno = ContaDAO.verificarSaldo(retorno3);
+        if (usuarioDAO.validarUsuario(user, password, TipoUsuario.CLIENTE)){
+            int retorno3 = ContaDAO.verificarContaRelacionada(usuarioDao.consultarClienteRelacionado(clienteDAO.buscarporId(user,password)));
+            BigDecimal retornoPraView = ContaDAO.verificarSaldo(retorno3);
         }else{
             Exception e = null;
             e.printStackTrace();
         }
+        clienteDAO.fechar();
     }
 
-    public static void extrato(String user, String password ) {
+    public static void extrato(String user, String password, TipoUsuario tipoUsuario ) {
         UsuarioDAO usuarioDAO = new UsuarioDAO();
         File file1 = new File("extrato.csv");
-        if (usuarioDAO.validarUsuario(user, password)) {
+
+        if (usuarioDAO.validarUsuario(user, password, tipoUsuario)) {
             try {
-                // Verifica o sistema operacional para abrir com o comando adequado
+
                 String os = System.getProperty("os.name").toLowerCase();
 
                 if (os.contains("win")) {
-                    // Para Windows, abre com Excel
+
                     String command = "cmd /c start excel \"" + file1.getAbsolutePath() + "\"";
-                    Runtime.getRuntime().exec(command); // Executa o comando para abrir o arquivo no Excel
+                    Runtime.getRuntime().exec(command);
                 }
             } catch (IOException e) {
-                e.printStackTrace(); // Exibe o erro caso falhe ao executar o comando
+                e.printStackTrace();
             }
         } else {
-            // Caso o usuário ou senha não sejam válidos
             System.out.println("Usuário ou senha inválidos.");
         }
+
+        usuarioDAO.fechar();
     }
 
 
-    }
+}

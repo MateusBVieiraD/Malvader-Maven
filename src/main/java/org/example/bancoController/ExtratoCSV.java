@@ -27,7 +27,7 @@ public class ExtratoCSV {
             entityManager.getTransaction().commit();
 
             FileWriter out = new FileWriter("extrato.csv");
-            CSVPrinter printer = new CSVPrinter(out, CSVFormat.DEFAULT.withHeader("ID ","|  Valor ","|  Data ","|  Tipo Transacao ","|  Conta-ID "));
+            CSVPrinter printer = new CSVPrinter(out, CSVFormat.DEFAULT.withHeader("ID","Valor","Data","Tipo Transacao","Conta-ID"));
 
             for (Transacao transacao : transacoes) {
                 printer.printRecord(transacao.getId(), transacao.getValor(), transacao.getDataHora(), transacao.getTipoTransacao(), transacao.getConta().getId());

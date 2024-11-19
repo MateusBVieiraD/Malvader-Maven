@@ -21,7 +21,7 @@ public class UsuarioEntity {
     @Column(name = "nome",length = 100)
     private String nome;
 
-    @Column(name = "cpf", length = 11)
+    @Column(name = "cpf", length = 14)
     private String cpf;
 
     @Column(name = "senha", length = 50)

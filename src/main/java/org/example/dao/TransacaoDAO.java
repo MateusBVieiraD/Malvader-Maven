@@ -5,7 +5,6 @@ import org.example.config.EntityFactory;
 import org.example.entity.ContaEntity;
 import org.example.entity.TipoTransacao;
 import org.example.entity.Transacao;
-import org.example.entity.UsuarioEntity;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;

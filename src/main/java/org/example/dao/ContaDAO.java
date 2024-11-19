@@ -2,13 +2,8 @@ package org.example.dao;
 
 import jakarta.persistence.*;
 import org.example.config.EntityFactory;
-import org.example.entity.Cliente;
-import org.example.entity.ContaEntity;
-import org.example.entity.TipoTransacao;
-import org.example.entity.UsuarioEntity;
-
+import org.example.entity.*;
 import java.math.BigDecimal;
-
 
 public class ContaDAO {
 
@@ -19,15 +14,17 @@ public class ContaDAO {
         entityManager = EntityFactory.getEntityManager();
     }
 
-    public void salvar(ContaEntity conta) {
+    public int salvar(ContaEntity conta) {
         EntityTransaction transaction = entityManager.getTransaction();
         try {
             transaction.begin();
-            entityManager.persist(conta);  // Persiste a entidade no banco
+            entityManager.persist(conta);
             transaction.commit();
+            return conta.getId();
         } catch (RuntimeException e) {
             if (transaction.isActive()) {
                 transaction.rollback();
+                return -1;
             }
             throw e; // Re-throw exception
         }
@@ -69,23 +66,38 @@ public class ContaDAO {
 
     }
 
+    public int criarConta(int id, String agencia, TipoConta tipoConta){
+        ContaEntity conta = new ContaEntity();
+        ContaDAO contaDAO = new ContaDAO();
+        Cliente cliente = entityManager.find(Cliente.class, id);
+        conta.setSaldo(BigDecimal.valueOf(0));
+        conta.setNumeroConta(String.valueOf(id));
+        conta.setAgencia(agencia);
+        conta.setTipoconta(tipoConta);
+        conta.setCliente(cliente);
+
+        int retornoId = contaDAO.salvar(conta);
+        return retornoId;
+
+    }
+
     public static BigDecimal verificarSaldo(int clienteId) {
 
         try{
             var a = EntityFactory.getEntityManager();
             UsuarioDAO usuarioDao = new UsuarioDAO();
 
-                TypedQuery<Integer> query = a.createQuery(
-                        "SELECT co.saldo FROM ContaEntity co JOIN co.cliente c WHERE c.id = :id",
-                        Integer.class
-                );
+            TypedQuery<Integer> query = a.createQuery(
+                    "SELECT co.saldo FROM ContaEntity co JOIN co.cliente c WHERE c.id = :id",
+                    Integer.class
+            );
 
-                query.setParameter("id", clienteId);
+            query.setParameter("id", clienteId);
 
-                BigDecimal c1 = BigDecimal.valueOf(query.getSingleResult());
+            BigDecimal c1 = BigDecimal.valueOf(query.getSingleResult());
 
 
-                return c1;
+            return c1;
 
 
         } catch (RuntimeException e) {
@@ -107,7 +119,8 @@ public class ContaDAO {
 
             // Atualiza o saldo
             contaPraAtualizar.adicionarSaldo(saldo);
-            System.out.println(contaPraAtualizar.getSaldo());
+            TransacaoDAO transacaoDAO = new TransacaoDAO();
+            transacaoDAO.criarTransacao(contaPraAtualizar,saldo,TipoTransacao.DEPOSITO);
 
             // Não é necessário persistir pois a entidade já está gerenciada
             transaction.commit();
@@ -134,8 +147,8 @@ public class ContaDAO {
                 update(contaPraSacar);
 
                 TransacaoDAO transacaoDAO = new TransacaoDAO();
-                ContaEntity c1 = a.find(ContaEntity.class, id);
-                transacaoDAO.criarTransacao(c1, valor, TipoTransacao.SAQUE);
+
+                transacaoDAO.criarTransacao(contaPraSacar, valor, TipoTransacao.SAQUE);
 
             }else{
                 Exception e = null;

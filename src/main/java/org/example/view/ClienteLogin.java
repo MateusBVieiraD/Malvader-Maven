@@ -2,6 +2,7 @@ package org.example.view;
 
 import org.example.controller.ClienteController;
 import org.example.controller.UsuarioController;
+import org.example.entity.TipoUsuario;
 
 import javax.swing.*;
 import java.awt.*;
@@ -53,20 +54,17 @@ public class ClienteLogin extends JPanel {
 
         Sessao.user = clienteLogin.getText();
 
-        botaoLoginCliente.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String usuario = clienteLogin.getText();
-                String senha = new String(clienteSenha.getPassword());
-                var clienteControl = new ClienteController();
-                if(clienteControl.login(usuario, senha)){
-                    frame.Show("MenuCliente");
-                } else{
-                    JOptionPane.showMessageDialog(frame, "Usuário ou senha inválido!");
-                    frame.Show("Home");
-                }
-                clienteSenha.setText("");
+        botaoLoginCliente.addActionListener(e -> {
+            String usuario = clienteLogin.getText();
+            String senha = new String(clienteSenha.getPassword());
+            var clienteControl = new ClienteController();
+            if(clienteControl.login(usuario, senha, TipoUsuario.CLIENTE)){
+                frame.Show("MenuCliente");
+            } else{
+                JOptionPane.showMessageDialog(frame, "Usuário ou senha inválido!");
+                frame.Show("Home");
             }
+            clienteSenha.setText("");
         });
 
         botaoCadastroCliente.addActionListener(e -> frame.Show("CadastroCliente"));

@@ -2,6 +2,7 @@ package org.example.view;
 
 import org.example.controller.ClienteController;
 import org.example.controller.FuncionarioController;
+import org.example.entity.TipoUsuario;
 
 import javax.swing.*;
 import java.awt.*;
@@ -49,7 +50,7 @@ public class FuncionarioLogin extends JPanel {
                 String login = funcionarioLogin.getText();
                 String senha = new String(funcionarioSenha.getPassword());
                 var funcionarioControl = new FuncionarioController();
-                if(funcionarioControl.login(login, senha)){
+                if(funcionarioControl.login(login, senha, TipoUsuario.FUNCIONARIO)){
                     frame.Show("MenuFuncionario");
                 } else{
                     JOptionPane.showMessageDialog(frame, "Usuário ou senha inválido!");

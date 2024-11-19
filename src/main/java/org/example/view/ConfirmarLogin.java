@@ -1,6 +1,7 @@
 package org.example.view;
 
 import org.example.controller.ClienteController;
+import org.example.entity.TipoUsuario;
 
 import javax.swing.*;
 import java.awt.*;
@@ -35,7 +36,7 @@ public class ConfirmarLogin extends JPanel {
         add(clienteTextLabel);
 
         clienteLogin.setBounds(10, 50, 165, 25);
-        clienteLogin.setEditable(false);
+        clienteLogin.setEditable(true);
         add(clienteLogin);
 
         clienteTextPassword.setBounds(10, 75, 80, 25);
@@ -53,7 +54,7 @@ public class ConfirmarLogin extends JPanel {
                 String login = clienteLogin.getText();
                 String senha = new String(clienteSenha.getPassword());
                 var clienteControl = new ClienteController();
-                if(clienteControl.login(login, senha)){
+                if(clienteControl.login(login, senha, TipoUsuario.CLIENTE)){
                     frame.Show("Depositar");
                 } else{
                     JOptionPane.showMessageDialog(frame, "Senha inválida!");

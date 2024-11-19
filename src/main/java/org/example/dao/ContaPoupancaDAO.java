@@ -8,6 +8,8 @@ import org.example.config.EntityFactory;
 import org.example.entity.ContaPoupanca;
 import jakarta.persistence.Entity;
 
+import java.math.BigDecimal;
+
 public class ContaPoupancaDAO {
     private final EntityManager entityManager;
 
@@ -44,6 +46,13 @@ public class ContaPoupancaDAO {
             throw new RuntimeException("Falha ao atualizar a conta", e); // Re-throw exception
         }
     }
+
+    /*public  void criarContaP(int id){
+        ContaPoupanca contaPoupanca = new ContaPoupanca();
+        contaPoupanca.setTaxaRendimento(BigDecimal.valueOf(3));
+
+        contaPoupanca.setConta();
+    }*/
 
     public void fechar() {
         entityManager.close();

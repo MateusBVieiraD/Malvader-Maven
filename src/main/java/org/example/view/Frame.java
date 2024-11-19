@@ -45,6 +45,7 @@ public class Frame extends JFrame {
         var contaPoupancaF = new ContaPoupancaF(this);
         var confirmarLogin = new ConfirmarLogin(this);
         var deposito = new Depositar(this);
+        var saque = new Saque(this);
 
         // CardLayout:
         cardLayout = new CardLayout();
