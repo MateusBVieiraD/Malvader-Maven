@@ -2,6 +2,8 @@ package org.example.dao;
 
 import jakarta.persistence.*;
 import org.example.config.EntityFactory;
+import org.example.entity.ContaEntity;
+import org.example.entity.TipoConta;
 import org.example.entity.TipoUsuario;
 import org.example.entity.UsuarioEntity;
 import java.time.LocalDate;
@@ -26,6 +28,23 @@ public class UsuarioDAO {
         } catch (RuntimeException e) {
             if (transaction.isActive()) {
                 transaction.rollback();
+            }
+            throw e; // Re-throw exception
+        }
+    }
+
+    public boolean remover(UsuarioEntity usuario){
+        EntityTransaction transaction = entityManager.getTransaction();
+        try {
+            transaction.begin();
+            entityManager.remove(usuario);  // Persiste a entidade no banco
+            transaction.commit();
+            return true;
+
+        } catch (RuntimeException e) {
+            if (transaction.isActive()) {
+                transaction.rollback();
+                return false;
             }
             throw e; // Re-throw exception
         }
@@ -60,6 +79,27 @@ public class UsuarioDAO {
             return false;
         }
     }
+
+
+    public boolean validarCpfParaConta(String cpf, TipoConta tipoConta) {
+        try {
+            String query = "SELECT u FROM UsuarioEntity u " +
+                    "JOIN Cliente c ON c.usuario.id = u.id " +
+                    "JOIN ContaEntity ce ON ce.cliente.id = c.id " +
+                    "WHERE u.cpf = :cpf AND ce.tipoconta = :tipoconta";
+
+            return entityManager.createQuery(query, UsuarioEntity.class)
+                    .setParameter("cpf", cpf) // Parâmetro para CPF
+                    .setParameter("tipoconta", tipoConta) // Parâmetro para TipoConta
+                    .getResultList()
+                    .size() > 0; // Verifica se há registros encontrados
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false; // Retorna falso em caso de erro
+        }
+    }
+
+
 
     public UsuarioEntity consultarDados(String user, String password){
 

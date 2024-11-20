@@ -14,13 +14,17 @@ public class ContaEntity {
 
     @Column(name = "numero_conta", length = 20)
     private String numeroConta;
+
     @Column(name = "agencia", length = 10)
     private String agencia;
-    @Column(name = "saldo" ,precision = 15, scale = 2)
-    private BigDecimal saldo;
+
+    @Column(name = "saldo", precision = 15, scale = 2, nullable = false)
+    private BigDecimal saldo = BigDecimal.ZERO;
+
     @Column(name = "tipo_conta")
     @Enumerated(EnumType.STRING)
     private TipoConta tipoconta;
+
     @ManyToOne
     @JoinColumn(name = "cliente_id")
     private Cliente cliente;
@@ -51,13 +55,8 @@ public class ContaEntity {
         this.agencia = agencia;
     }
 
-
     public BigDecimal getSaldo() {
-        return saldo;
-    }
-
-    public void setSaldo(BigDecimal saldo) {
-        this.saldo = saldo;
+        return saldo; // Retorna o saldo atual
     }
 
     public TipoConta getTipoconta() {
@@ -80,8 +79,11 @@ public class ContaEntity {
         this.saldo = this.saldo.add(BigDecimal.valueOf(saldo));
     }
 
-
     public void sacarSaldo(double valor) {
+        if (this.saldo.compareTo(BigDecimal.valueOf(valor)) < 0) {
+            throw new IllegalArgumentException("Saldo insuficiente para o saque.");
+        }
         this.saldo = this.saldo.subtract(BigDecimal.valueOf(valor));
     }
 }
+

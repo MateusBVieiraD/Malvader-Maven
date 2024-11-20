@@ -1,14 +1,9 @@
 package org.example.controller;
 
 import org.example.dao.UsuarioDAO;
-
 import org.example.entity.TipoConta;
 import org.example.entity.TipoUsuario;
 import org.example.entity.UsuarioEntity;
-
-
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 
 public class UsuarioController {
     private final UsuarioDAO usuarioDao = new UsuarioDAO();
@@ -32,6 +27,14 @@ public class UsuarioController {
             return false;
         }else{
             return usuarioDao.validarUsuario(user, senha, tipoUsuario);
+        }
+    }
+
+    public boolean ValidarCpfConta(String cpf, TipoConta tipoConta){
+        if(cpf.isEmpty() || cpf.equals(" ")){
+            return false;
+        }else{
+            return usuarioDao.validarCpfParaConta(cpf, tipoConta);
         }
     }
 

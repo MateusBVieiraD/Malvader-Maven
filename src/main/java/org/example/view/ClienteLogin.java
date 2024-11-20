@@ -19,7 +19,6 @@ public class ClienteLogin extends JPanel {
 
         // Botões
         var botaoLoginCliente = new JButton("Login");
-        var botaoCadastroCliente = new JButton("Registrar");
 
         // Textos
         var clienteTextLabel = new JLabel("Usuário");
@@ -31,16 +30,16 @@ public class ClienteLogin extends JPanel {
         var clienteSenha = new JPasswordField(20);
 
         // Configurando as bounds
-        clienteTextLogin.setBounds(250, 10, 80, 25);
+        clienteTextLogin.setBounds(250, 10, 350, 25);
         add(clienteTextLogin);
 
-        clienteTextLabel.setBounds(10, 25, 80, 25);
+        clienteTextLabel.setBounds(10, 25, 350, 25);
         add(clienteTextLabel);
 
         clienteLogin.setBounds(10, 50, 165, 25);
         add(clienteLogin);
 
-        clienteTextPassword.setBounds(10, 75, 80, 25);
+        clienteTextPassword.setBounds(10, 75, 350, 25);
         add(clienteTextPassword);
 
         clienteSenha.setBounds(10, 100, 165, 25);
@@ -48,11 +47,6 @@ public class ClienteLogin extends JPanel {
 
         botaoLoginCliente.setBounds(10, 150, 80, 30);
         add(botaoLoginCliente);
-
-        botaoCadastroCliente.setBounds(10, 200, 80, 30);
-        add(botaoCadastroCliente);
-
-        Sessao.user = clienteLogin.getText();
 
         botaoLoginCliente.addActionListener(e -> {
             String usuario = clienteLogin.getText();
@@ -66,7 +60,5 @@ public class ClienteLogin extends JPanel {
             }
             clienteSenha.setText("");
         });
-
-        botaoCadastroCliente.addActionListener(e -> frame.Show("CadastroCliente"));
     }
 }

@@ -28,8 +28,6 @@ public class Depositar extends JPanel {
         depositar.setBounds(10, 75, 80, 30);
         add(depositar);
 
-
-
         voltarBotao.addActionListener(e -> frame.Show("MenuCliente"));
 
     }

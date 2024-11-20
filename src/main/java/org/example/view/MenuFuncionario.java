@@ -41,6 +41,18 @@ public class MenuFuncionario extends JPanel {
 
         aberturaFB.addActionListener(e -> frame.Show("ContaFuncionario"));
 
+        encerramentoFB.addActionListener(e -> frame.Show("EncerrarConta"));
+
+        consultarFB.addActionListener(e -> frame.Show("ConsultarDados"));
+
+        alterarFB.addActionListener(e -> frame.Show("AlterarDados"));
+
+        cadastroFB.addActionListener(e -> {
+            frame.Show("CadastroFuncionario");
+            frame.resizeFrame(900, 900);
+        });
+
         sairFB.addActionListener(e -> frame.Show("Home"));
+
     }
 }

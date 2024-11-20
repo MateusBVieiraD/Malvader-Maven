@@ -18,7 +18,7 @@ public class Relatorio {
     private String tipoRelatorio;
     @Column(name = "data_geracao")
     private Timestamp timestamp;
-    @Column(name = "conteudo")
+    @Column(name = "conteudo", length = 50)
     private String conteudo;
     @ManyToOne
     @JoinColumn

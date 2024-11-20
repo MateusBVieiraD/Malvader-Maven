@@ -1,18 +1,13 @@
 package org.example;
 
-import org.example.bancoController.ExtratoCSV;
+import org.example.bancoController.RelatorioCSV;
 import org.example.bancoController.HibernateToCSV;
-import org.example.config.EntityFactory;
 import org.example.controller.*;
-import org.example.dao.ClienteDAO;
-import org.example.dao.TransacaoDAO;
 import org.example.dao.UsuarioDAO;
 import org.example.entity.*;
 import org.example.view.*;
 
-import javax.swing.*;
 import java.io.IOException;
-import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 
@@ -115,13 +110,13 @@ public class Main {
         clienteController.depositar("Mateus","oiteste123",100);
 
         clienteController.saque("Mateus","oiteste123",600);
+*/
+        RelatorioCSV relatorioCSV = new RelatorioCSV();
+        relatorioCSV.relatorioCSV();
 
-        ExtratoCSV extratoCSV = new ExtratoCSV();
-        extratoCSV.extratoCSV();
+        //ClienteController.extrato("Mateus","oiteste123");
 
-        ClienteController.extrato("Mateus","oiteste123");*/
-
-
+        controllerGeral.removerConta("Luis", "teste123", TipoUsuario.FUNCIONARIO, "1");
 
         funcionarioController.fecharOperacao();
         clienteController.fecharOperacao();

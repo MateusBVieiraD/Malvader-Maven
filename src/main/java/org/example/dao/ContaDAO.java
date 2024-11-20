@@ -30,6 +30,23 @@ public class ContaDAO {
         }
     }
 
+    public boolean remover(ContaEntity contaEntity){
+        EntityTransaction transaction = entityManager.getTransaction();
+        try {
+            transaction.begin();
+            entityManager.remove(contaEntity);
+            transaction.commit();
+            return true;
+
+        } catch (RuntimeException e) {
+            if (transaction.isActive()) {
+                transaction.rollback();
+                return false;
+            }
+            throw e; // Re-throw exception
+        }
+    }
+
     public static ContaEntity update(ContaEntity conta){
         var a = EntityFactory.getEntityManager();
         EntityTransaction transaction = a.getTransaction();
@@ -70,7 +87,6 @@ public class ContaDAO {
         ContaEntity conta = new ContaEntity();
         ContaDAO contaDAO = new ContaDAO();
         Cliente cliente = entityManager.find(Cliente.class, id);
-        conta.setSaldo(BigDecimal.valueOf(0));
         conta.setNumeroConta(String.valueOf(id));
         conta.setAgencia(agencia);
         conta.setTipoconta(tipoConta);
@@ -159,5 +175,16 @@ public class ContaDAO {
         }
 
 
+    }
+
+    public ContaEntity buscarNumeroConta(String numeroConta){
+        try {
+            return entityManager.createQuery("SELECT c FROM ContaEntity c WHERE c.numeroConta = :numeroConta", ContaEntity.class)
+                    .setParameter("numeroConta", numeroConta)
+                    .getSingleResult();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }

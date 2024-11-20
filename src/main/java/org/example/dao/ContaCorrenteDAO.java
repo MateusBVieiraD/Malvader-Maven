@@ -1,31 +1,53 @@
 package org.example.dao;
 
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
-import jakarta.persistence.Persistence;
 import org.example.config.EntityFactory;
+import org.example.entity.Cliente;
 import org.example.entity.ContaCorrente;
-import org.example.entity.UsuarioEntity;
+import org.example.entity.ContaEntity;
+import org.example.entity.Endereco;
+
+import java.math.BigDecimal;
+import java.time.LocalDate;
 
 public class ContaCorrenteDAO {
+    ContaCorrente contaCorrente = new ContaCorrente();
 
     private final EntityManager entityManager;
-
     public ContaCorrenteDAO() {
         // Cria o EntityManagerFactory com base no nome da unidade de persistência
         entityManager = EntityFactory.getEntityManager();
     }
 
-    public void salvar(ContaCorrente contaCorrente) {
+    public boolean salvar(ContaCorrente contaCorrente) {
         EntityTransaction transaction = entityManager.getTransaction();
         try {
             transaction.begin();
             entityManager.persist(contaCorrente);
             transaction.commit();
+            return true;
         } catch (RuntimeException e) {
             if (transaction.isActive()) {
                 transaction.rollback();
+                return false;
+            }
+            throw e; // Re-throw exception
+        }
+    }
+
+    public boolean remover(ContaCorrente contaCorrente){
+        EntityTransaction transaction = entityManager.getTransaction();
+        try {
+            transaction.begin();
+            entityManager.remove(contaCorrente);
+            transaction.commit();
+            return true;
+
+        } catch (RuntimeException e) {
+            if (transaction.isActive()) {
+                transaction.rollback();
+                return false;
             }
             throw e; // Re-throw exception
         }
@@ -46,7 +68,26 @@ public class ContaCorrenteDAO {
         }
     }
 
-    //public void criarContaCorrente(int id, limite)
+    public boolean criarContaCorrente(int id, LocalDate dataVencimento, BigDecimal limite){
+        ContaCorrenteDAO contaCorrenteDAO = new ContaCorrenteDAO();
+        contaCorrente.setData(dataVencimento);
+        contaCorrente.setLimite(limite);
+        ContaEntity contaEntity = entityManager.find(ContaEntity.class, id);
+        contaCorrente.setConta(contaEntity);
+        boolean retornoStatus = contaCorrenteDAO.salvar(contaCorrente);
+        return retornoStatus;
+    }
+
+    public ContaCorrente buscarContaCorrenteConta(int id){
+        try {
+            return entityManager.createQuery("SELECT e FROM conta_corrente e WHERE e.conta_id = :id", ContaCorrente.class)
+                    .setParameter("id", id)
+                    .getSingleResult();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
     public void fechar() {
         entityManager.close();

@@ -33,6 +33,23 @@ public class EnderecoDAO {
         }
     }
 
+    public boolean remover(Endereco endereco){
+        EntityTransaction transaction = entityManager.getTransaction();
+        try {
+            transaction.begin();
+            entityManager.remove(endereco);
+            transaction.commit();
+            return true;
+
+        } catch (RuntimeException e) {
+            if (transaction.isActive()) {
+                transaction.rollback();
+                return false;
+            }
+            throw e; // Re-throw exception
+        }
+    }
+
     public Endereco update(Endereco endereco){
         EntityTransaction transaction = entityManager.getTransaction();
         try {
@@ -61,6 +78,17 @@ public class EnderecoDAO {
         endereco.setUsuario(usuarioEntity);
         EnderecoDAO enderecoDAO = new EnderecoDAO();
         enderecoDAO.salvar(endereco);
+    }
+
+    public Endereco buscarEnderecoUsuario(int id){
+        try {
+            return entityManager.createQuery("SELECT e FROM Endereco e WHERE e.usuario.id = :id", Endereco.class)
+                    .setParameter("id", id)
+                    .getSingleResult();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
 

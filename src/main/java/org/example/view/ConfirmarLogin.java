@@ -10,7 +10,6 @@ import java.awt.event.ActionListener;
 
 public class ConfirmarLogin extends JPanel {
     public ConfirmarLogin(Frame frame){
-        var clienteLog = new ClienteLogin(null);
 
         setLayout(null);
         setSize(900, 900);
@@ -32,14 +31,14 @@ public class ConfirmarLogin extends JPanel {
         clienteTextLogin.setBounds(250, 10, 350, 25);
         add(clienteTextLogin);
 
-        clienteTextLabel.setBounds(10, 25, 80, 25);
+        clienteTextLabel.setBounds(10, 25, 350, 25);
         add(clienteTextLabel);
 
         clienteLogin.setBounds(10, 50, 165, 25);
         clienteLogin.setEditable(true);
         add(clienteLogin);
 
-        clienteTextPassword.setBounds(10, 75, 80, 25);
+        clienteTextPassword.setBounds(10, 75, 350, 25);
         add(clienteTextPassword);
 
         clienteSenha.setBounds(10, 100, 165, 25);
@@ -48,9 +47,7 @@ public class ConfirmarLogin extends JPanel {
         botaoLoginCliente.setBounds(10, 150, 80, 30);
         add(botaoLoginCliente);
 
-        botaoLoginCliente.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
+        botaoLoginCliente.addActionListener(e -> {
                 String login = clienteLogin.getText();
                 String senha = new String(clienteSenha.getPassword());
                 var clienteControl = new ClienteController();
@@ -61,7 +58,6 @@ public class ConfirmarLogin extends JPanel {
                     frame.Show("MenuCliente");
                 }
                 clienteSenha.setText("");
-            }
         });
     }
 }

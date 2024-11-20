@@ -12,8 +12,8 @@ public class Frame extends JFrame {
         Programa();
     }
 
-
     private void Programa(){
+
 
         // Alteração do tema do JOptionPane
         try {
@@ -37,7 +37,6 @@ public class Frame extends JFrame {
         var Home = new Home(this);
         var clienteLogin = new ClienteLogin(this);
         var funcionarioLogin = new FuncionarioLogin(this);
-        var cadastroCliente = new CadastroCliente(this);
         var menuFuncionario = new MenuFuncionario(this);
         var menuCliente = new MenuCliente(this);
         var contaFuncionario = new ContaFuncionario(this);
@@ -46,6 +45,19 @@ public class Frame extends JFrame {
         var confirmarLogin = new ConfirmarLogin(this);
         var deposito = new Depositar(this);
         var saque = new Saque(this);
+        var encerrarConta = new EncerramentoConta(this);
+        var cadastroFuncionarios = new CadastroFuncionarios(this);
+        var consultarDados = new ConsultarDados(this);
+        var alterarDados = new AlterarDados(this);
+        var saldo = new Saldo(this);
+        var extrato = new Extrato(this);
+        var gerarRelatorio = new GerarRelatoriosLogin(this);
+        var consultarConta = new ConsultarConta(this);
+        var consultarFuncionario = new ConsultarFuncionario(this);
+        var consultarCliente = new ConsultarCliente(this);
+        var alterarConta = new AlterarConta(this);
+        var alterarFuncionario = new AlterarFuncionario(this);
+        var alterarCliente = new AlterarCliente(this);
 
         // CardLayout:
         cardLayout = new CardLayout();
@@ -66,14 +78,28 @@ public class Frame extends JFrame {
         container.add(Home, "Home");
         container.add(clienteLogin, "LoginCliente");
         container.add(funcionarioLogin, "LoginFuncionario");
-        container.add(cadastroCliente, "CadastroCliente");
         container.add(menuFuncionario, "MenuFuncionario");
         container.add(menuCliente, "MenuCliente");
         container.add(contaFuncionario, "ContaFuncionario");
         container.add(contaPoupancaF, "ContaPoupancaF");
         container.add(contaCorrenteF, "ContaCorrenteF");
         container.add(confirmarLogin, "ConfirmarLogin");
+        container.add(saldo, "Saldo");
         container.add(deposito, "Depositar");
+        container.add(saque, "Saque");
+        container.add(extrato, "Extrato");
+        container.add(encerrarConta, "EncerrarConta");
+        container.add(cadastroFuncionarios, "CadastroFuncionarios");
+        container.add(consultarDados, "ConsultarDados");
+        container.add(alterarDados, "AlterarDados");
+        container.add(gerarRelatorio, "GerarRelatorio");
+        container.add(consultarConta, "ConsultarConta");
+        container.add(consultarFuncionario, "ConsultarFuncionario");
+        container.add(consultarCliente, "ConsultarCliente");
+        container.add(alterarConta, "AlterarConta");
+        container.add(alterarFuncionario, "AlterarFuncionario");
+        container.add(alterarCliente, "AlterarCliente");
+
 
         // Adicionando o Panel ao Frame
         add(container);

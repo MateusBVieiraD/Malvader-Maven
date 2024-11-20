@@ -34,6 +34,23 @@ public class ClienteDAO {
         }
     }
 
+    public boolean remover(Cliente cliente){
+        EntityTransaction transaction = entityManager.getTransaction();
+        try {
+            transaction.begin();
+            entityManager.remove(cliente);
+            transaction.commit();
+            return true;
+
+        } catch (RuntimeException e) {
+            if (transaction.isActive()) {
+                transaction.rollback();
+                return false;
+            }
+            throw e; // Re-throw exception
+        }
+    }
+
     public Cliente update(Cliente cliente){
         EntityTransaction transaction = entityManager.getTransaction();
         try {
@@ -50,6 +67,8 @@ public class ClienteDAO {
             throw new RuntimeException("Falha ao atualizar o cliente", e); // Re-throw exception
         }
     }
+
+
 
 
     public int criarCliente(int id){
@@ -74,6 +93,10 @@ public class ClienteDAO {
         return id;
 
 
+
+    }
+
+    public void buscarUsuario(){
 
     }
 

@@ -1,13 +1,25 @@
 package org.example.view;
 
 
+import org.example.controller.ContaController;
+import org.example.controller.ContaCorrenteController;
+import org.example.controller.ContaPoupancaController;
+import org.example.controller.UsuarioController;
+import org.example.entity.TipoConta;
+import org.example.entity.TipoUsuario;
+
 import javax.swing.*;
 import javax.swing.text.*;
 import java.awt.*;
+import java.math.BigDecimal;
 import java.text.ParseException;
+import java.time.LocalDate;
 
 public class ContaCorrenteF extends JPanel {
     public ContaCorrenteF(Frame frame) {
+        var contaCorrenteController = new ContaCorrenteController();
+        var UserControl = new UsuarioController();
+
         setLayout(null);
         setSize(900, 900);
         setBackground(new Color(255, 255, 255));
@@ -18,11 +30,12 @@ public class ContaCorrenteF extends JPanel {
         var agencia = new JLabel("Agência:");
         var numeroConta = new JLabel("Número da conta:");
         var limiteConta = new JLabel("Limite da conta:");
-        var dataVencimento = new JLabel("Data de vencimento:");
+        var dataVencimento = new JLabel("Data de vencimento (YYYY/MM/DD):");
         var nomeCliente = new JLabel("Nome do cliente:");
         var cpfCliente = new JLabel("CPF do cliente:");
         var dataNascimento = new JLabel("Data de nascimento:");
         var telefoneContato = new JLabel("Telefone de contato:");
+        var enderecoCliente = new JLabel("Endereço do cliente:");
         var cepCliente = new JLabel("CEP:");
         var localCliente = new JLabel("Local:");
         var numeroCasa = new JLabel("Número da casa:");
@@ -50,7 +63,18 @@ public class ContaCorrenteF extends JPanel {
             throw new RuntimeException(e);
         }
 
-        var nascimentoText = new JTextField();
+        JFormattedTextField nascimentoText;
+        try{
+
+            MaskFormatter nascimentoMask = new MaskFormatter("####/##/##");
+            nascimentoText = new JFormattedTextField(nascimentoMask);
+            nascimentoText.setColumns(10);
+
+            PlainDocument doc = (PlainDocument) nascimentoText.getDocument();
+            doc.setDocumentFilter(new org.example.view.NumericDocumentFilter());
+        }catch (ParseException e){
+            throw new RuntimeException(e);
+        }
 
             JFormattedTextField telefoneText;
         try {
@@ -60,6 +84,8 @@ public class ContaCorrenteF extends JPanel {
         }catch (ParseException e){
             throw new RuntimeException(e);
         }
+
+        var enderecoText = new JTextField();
 
             JFormattedTextField cepText;
         try {
@@ -134,50 +160,134 @@ public class ContaCorrenteF extends JPanel {
         telefoneText.setBounds(10, 400, 165, 25);
         add(telefoneText);
 
-        cepCliente.setBounds(10, 425, 350, 25);
+        enderecoCliente.setBounds(10, 425, 165, 25);
+        add(enderecoCliente);
+
+        enderecoText.setBounds(10, 450, 265, 25);
+        add(enderecoText);
+
+        cepCliente.setBounds(10, 475, 350, 25);
         add(cepCliente);
 
-        cepText.setBounds(10, 450, 165, 25);
+        cepText.setBounds(10, 500, 165, 25);
         add(cepText);
 
-        localCliente.setBounds(10, 475, 350, 25);
+        localCliente.setBounds(10, 525, 350, 25);
         add(localCliente);
 
-        localText.setBounds(10, 500, 165, 25);
+        localText.setBounds(10, 550, 165, 25);
         add(localText);
 
-        numeroCasa.setBounds(10, 525, 350, 25);
+        numeroCasa.setBounds(10, 575, 350, 25);
         add(numeroCasa);
 
-        numeroCasaText.setBounds(10, 550, 165, 25);
+        numeroCasaText.setBounds(10, 600, 165, 25);
         add(numeroCasaText);
 
-        bairroCliente.setBounds(10, 575, 350, 25);
+        bairroCliente.setBounds(10, 625, 350, 25);
         add(bairroCliente);
 
-        bairroText.setBounds(10, 600, 165, 25);
+        bairroText.setBounds(10, 650, 165, 25);
         add(bairroText);
 
-        cidadeCliente.setBounds(10, 625, 350, 25);
+        cidadeCliente.setBounds(10, 675, 350, 25);
         add(cidadeCliente);
 
-        cidadeText.setBounds(10, 650, 165, 25);
+        cidadeText.setBounds(10, 700, 165, 25);
         add(cidadeText);
 
-        estadoCliente.setBounds(10, 675, 350, 25);
+        estadoCliente.setBounds(10, 725, 350, 25);
         add(estadoCliente);
 
-        estadoText.setBounds(10, 700, 165, 25);
+        estadoText.setBounds(10, 750, 165, 25);
         add(estadoText);
 
-        senhaCliente.setBounds(10, 725, 350, 25);
+        senhaCliente.setBounds(10, 775, 350, 25);
         add(senhaCliente);
 
-        senhaClienteText.setBounds(10, 750, 165, 25);
+        senhaClienteText.setBounds(10, 800, 165, 25);
         add(senhaClienteText);
 
-        criarBotao.setBounds(10, 800, 80, 30);
+        criarBotao.setBounds(10, 900, 80, 30);
         add(criarBotao);
+
+        criarBotao.addActionListener(e -> {
+            String agenciaT = agenciaText.getText();
+            String numeroC = numeroContaText.getText();
+            String username = nomeText.getText();
+            String cpf = cpfText.getText();
+            String nascimento = nascimentoText.getText();
+            String telefoneC = telefoneText.getText();
+            String endereco = enderecoText.getText();
+            String cep = cepText.getText();
+            String local = localText.getText();
+            String numerocasa = numeroCasaText.getText();
+            String bairro = bairroText.getText();
+            String cidade = cidadeText.getText();
+            String estado = estadoText.getText();
+            String senha = senhaClienteText.getText();
+            String datavencimento = vencimento.getText();
+            String limite = limiteC.getText();
+
+            if(agenciaT.isEmpty()){
+                JOptionPane.showMessageDialog(frame, "O campo agencia não foi preenchido!");
+            } else if(numeroC.isEmpty()){
+                JOptionPane.showMessageDialog(frame, "O campo número da conta não foi preenchida!");
+            } else if(username.isEmpty()){
+                JOptionPane.showMessageDialog(frame, "O campo nome não foi preenchido!");
+            } else if(UserControl.ValidarCpfConta(cpf, TipoConta.CORRENTE)){
+                JOptionPane.showMessageDialog(frame, "Já existe uma conta poupança com este cpf!");
+            } else if(cpf.isEmpty()){
+                JOptionPane.showMessageDialog(frame, "O campo cpf não foi preenchido!");
+            } else if (nascimento.isEmpty()) {
+                JOptionPane.showMessageDialog(frame, "O campo data de nascimento não foi preenchido!");
+            } else if(telefoneC.isEmpty()){
+                JOptionPane.showMessageDialog(frame, "O campo telefone não foi preenchido!");
+            } else if (endereco.isEmpty()) {
+                JOptionPane.showMessageDialog(frame, "O campo endereço não foi preenchido!");
+            } else if(cep.isEmpty()){
+                JOptionPane.showMessageDialog(frame, "O campo CEP não foi preenchido!");
+            } else if (local.isEmpty()) {
+                JOptionPane.showMessageDialog(frame, "O campo local não foi preenchido!");
+            } else if (numerocasa.isEmpty()) {
+                JOptionPane.showMessageDialog(frame, "O campo número da casa não foi preenchido!");
+            } else if(bairro.isEmpty()){
+                JOptionPane.showMessageDialog(frame, "O campo bairro não foi preenchido!");
+            } else if (cidade.isEmpty()) {
+                JOptionPane.showMessageDialog(frame, "O campo cidade não foi preenchido!");
+            } else if (estado.isEmpty()) {
+                JOptionPane.showMessageDialog(frame, "O campo estado não foi preenchido!");
+            } else if (senha.isEmpty()) {
+                JOptionPane.showMessageDialog(frame, "O campo senha não foi preenchido!");
+            } else if (datavencimento.isEmpty()) {
+                JOptionPane.showMessageDialog(frame, "O campo data de vencimento não foi preenchido!");
+            } else if (limite.isEmpty()) {
+                JOptionPane.showMessageDialog(frame, "O campo limite da conta não foi preenchido!");
+            } else {
+                boolean verificar = contaCorrenteController.criarContaC(cpf, senha, username, telefoneC, TipoUsuario.CLIENTE, LocalDate.parse(nascimento), cep, local, Integer.parseInt(numerocasa), bairro, cidade, estado, agenciaT, TipoConta.CORRENTE, LocalDate.parse(datavencimento), BigDecimal.valueOf(Double.parseDouble(limite)));
+                numeroCasaText.setText("");
+                nomeText.setText("");
+                cpfText.setText("");
+                nascimentoText.setText("");
+                telefoneText.setText("");
+                enderecoText.setText("");
+                cepText.setText("");
+                localText.setText("");
+                numeroCasaText.setText("");
+                bairroText.setText("");
+                cidadeText.setText("");
+                estadoText.setText("");
+                senhaClienteText.setText("");
+                vencimento.setText("");
+                limiteC.setText("");
+                if(verificar){
+                    JOptionPane.showMessageDialog(frame, "Conta criada com sucesso!");
+                }
+            }
+
+
+
+        });
 
         botaoVoltar.addActionListener(e -> {
             frame.Show("ContaFuncionario");
