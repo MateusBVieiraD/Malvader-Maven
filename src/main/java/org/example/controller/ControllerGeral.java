@@ -20,7 +20,7 @@ public class ControllerGeral {
         return retornoIdConta;
     }
 
-    public void removerConta(String user, String password, TipoUsuario tipoUsuario, String numeroConta) {
+    public boolean removerConta(String user, String password, TipoUsuario tipoUsuario, String numeroConta) {
         UsuarioDAO usuarioDAO = new UsuarioDAO();
         if (usuarioDAO.validarUsuario(user, password, tipoUsuario)) {
 
@@ -30,7 +30,6 @@ public class ControllerGeral {
 
 
             ContaEntity contaEntity = contaDAO.buscarNumeroConta(numeroConta);
-            System.out.println(contaEntity.getId());
             if (contaEntity != null) {
                 Cliente cliente = contaEntity.getCliente();
                 UsuarioEntity usuario = cliente.getUsuario();
@@ -39,19 +38,15 @@ public class ControllerGeral {
                 contaDAO.remover(contaEntity);
 
                 Endereco endereco = enderecoDAO.buscarEnderecoUsuario(usuario.getId());
-                if (endereco != null) {
 
-                    enderecoDAO.remover(endereco); // Remove o endereço, se existir
-                }
-                System.out.println(clienteDAO.removerClienteForcado(cliente.getId())); // Remove o cliente, removendo a chave estrangeira do usuário na tabela cliente
+                    enderecoDAO.remover(endereco);
 
-                // 2. Remover o endereço associado ao usuário
+                clienteDAO.remover(cliente.getId());
 
 
-                // 3. Remover a conta// Remove a conta
+                usuarioDAO.remover(usuario.getId());
 
-                // 4. Finalmente, agora podemos remover o usuário
-                usuarioDAO.removerUsuarioForcado(usuario.getId()); // Remove o usuário
+                return true;
             }
         }
     }

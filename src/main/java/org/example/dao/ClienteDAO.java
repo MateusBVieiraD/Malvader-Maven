@@ -30,7 +30,7 @@ public class ClienteDAO {
         }
     }
 
-    public boolean removerClienteForcado(int clienteId) {
+    public boolean remover(int clienteId) {
         EntityTransaction transaction = entityManager.getTransaction();
         try {
             transaction.begin();

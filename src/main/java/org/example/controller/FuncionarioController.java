@@ -29,6 +29,17 @@ public class FuncionarioController {
         }
     }
 
+    public boolean validarFuncionario(String user, String password, TipoUsuario tipoUsuario){
+        UsuarioDAO usuarioDAO = new UsuarioDAO();
+
+        if (usuarioDAO.validarUsuario(user, password, tipoUsuario)){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+
 
 
     public void fecharOperacao(){

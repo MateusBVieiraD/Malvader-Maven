@@ -148,7 +148,7 @@ public class UsuarioDAO {
         }
     }
 
-    public void removerUsuarioForcado(int usuarioId) {
+    public void remover(int usuarioId) {
         EntityTransaction transaction = entityManager.getTransaction();
         try {
             transaction.begin();
