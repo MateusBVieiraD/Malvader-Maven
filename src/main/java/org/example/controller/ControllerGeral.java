@@ -6,12 +6,18 @@ import org.example.entity.*;
 import java.time.LocalDate;
 
 
+
 public class ControllerGeral {
     public int criarConta(String cpf, String senha, String nome, String telefone, TipoUsuario tipoUsuario, LocalDate dataNascimento, String cep,String local, int numeroCasa, String bairro, String cidade, String estado, String agencia, TipoConta tipoConta, String cargo, String codigo ) {
 
         UsuarioDAO usuarioDAO = new UsuarioDAO();
         if(tipoUsuario == TipoUsuario.CLIENTE){
             int retornoIdUsuario = usuarioDAO.criarUsuario(cpf, senha, nome, telefone, tipoUsuario, dataNascimento);
+            if (usuarioDAO.verificarExistenciaCpf(cpf) != null){
+                UsuarioEntity usuarioEntity = usuarioDAO.verificarExistenciaCpf(cpf);
+                int retornoId = usuarioEntity.getId();
+
+            }
             EnderecoController enderecoController = new EnderecoController();
             enderecoController.criarEndereco(retornoIdUsuario, cep, local, numeroCasa, bairro, cidade, estado);
             ClienteDAO clienteDAO = new ClienteDAO();
@@ -45,6 +51,7 @@ public class ControllerGeral {
 
             ContaEntity contaEntity = contaDAO.buscarNumeroConta(numeroConta);
             if (contaEntity != null) {
+
                 Cliente cliente = contaEntity.getCliente();
                 UsuarioEntity usuario = cliente.getUsuario();
 
@@ -71,6 +78,8 @@ public class ControllerGeral {
                 return true;
 
             }
+
+        contaDAO.fechar();
 
 
         return false;

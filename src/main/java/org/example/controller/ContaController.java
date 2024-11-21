@@ -21,8 +21,9 @@ public class ContaController {
 
     public void consultarConta(String numeroConta){
 
+        ContaEntity contaEntity = contaDao.buscarNumeroConta(numeroConta);
 
-
+        contaEntity.toString();
 
     }
 

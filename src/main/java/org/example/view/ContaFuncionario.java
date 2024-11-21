@@ -36,7 +36,7 @@ public class ContaFuncionario extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 frame.Show("ContaCorrenteF");
-                frame.resizeFrame(1200, 900);
+                frame.resizeFrame(900, 1200);
             }
         });
 

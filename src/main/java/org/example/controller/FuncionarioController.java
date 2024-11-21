@@ -1,10 +1,14 @@
 package org.example.controller;
 
+import org.example.bancoController.RelatorioCSV;
 import org.example.dao.FuncionarioDAO;
 import org.example.dao.UsuarioDAO;
 import org.example.entity.Funcionario;
 import org.example.entity.Relatorio;
 import org.example.entity.TipoUsuario;
+
+import java.io.File;
+import java.io.IOException;
 
 
 public class FuncionarioController {
@@ -39,6 +43,33 @@ public class FuncionarioController {
         }
     }
 
+    public static void gerarRelatorio(String user, String password, TipoUsuario tipoUsuario ) throws IOException {
+        UsuarioDAO usuarioDAO = new UsuarioDAO();
+        RelatorioCSV relatorioCSV = new RelatorioCSV();
+
+        relatorioCSV.relatorioCSV();
+
+        File file1 = new File("relatorio.csv");
+
+        if (usuarioDAO.validarUsuario(user, password, tipoUsuario)) {
+            try {
+
+                String os = System.getProperty("os.name").toLowerCase();
+
+                if (os.contains("win")) {
+
+                    String command = "cmd /c start excel \"" + file1.getAbsolutePath() + "\"";
+                    Runtime.getRuntime().exec(command);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            System.out.println("Usuário ou senha inválidos.");
+        }
+
+        usuarioDAO.fechar();
+    }
 
 
 

@@ -101,16 +101,15 @@ public class ContaDAO {
 
         try{
             var a = EntityFactory.getEntityManager();
-            UsuarioDAO usuarioDao = new UsuarioDAO();
 
-            TypedQuery<Integer> query = a.createQuery(
+            TypedQuery<BigDecimal> query = a.createQuery(
                     "SELECT co.saldo FROM ContaEntity co JOIN co.cliente c WHERE c.id = :id",
-                    Integer.class
+                    BigDecimal.class
             );
 
             query.setParameter("id", clienteId);
 
-            BigDecimal c1 = BigDecimal.valueOf(query.getSingleResult());
+            BigDecimal c1 = query.getSingleResult();
 
 
             return c1;
@@ -130,10 +129,8 @@ public class ContaDAO {
         try {
             transaction.begin();
 
-            // Busca a conta com o ID fornecido
             ContaEntity contaPraAtualizar = a.find(ContaEntity.class, id);
 
-            // Atualiza o saldo
             contaPraAtualizar.adicionarSaldo(saldo);
             TransacaoDAO transacaoDAO = new TransacaoDAO();
             transacaoDAO.criarTransacao(contaPraAtualizar,saldo,TipoTransacao.DEPOSITO);
@@ -151,12 +148,14 @@ public class ContaDAO {
         }
     }
 
-    public static void sacarSaldo(int id, double valor){
+    public static boolean sacarSaldo(int id, double valor){
         EntityManager a = EntityFactory.getEntityManager();
 
         try{
+
             ContaEntity contaPraSacar = a.find(ContaEntity.class, id);
-            if(valor < contaPraSacar.getSaldo().doubleValue()){
+
+            if(contaPraSacar != null && valor < contaPraSacar.getSaldo().doubleValue()){
                 contaPraSacar.sacarSaldo(valor);
 
                 update(contaPraSacar);
@@ -165,12 +164,14 @@ public class ContaDAO {
 
                 transacaoDAO.criarTransacao(contaPraSacar, valor, TipoTransacao.SAQUE);
 
-            }else{
-                Exception e = null;
-                e.printStackTrace();
+                return true;
+
             }
+
+            return false;
+
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("Algo de errado ocorreu ao sacar o saldo");
         }
 
 

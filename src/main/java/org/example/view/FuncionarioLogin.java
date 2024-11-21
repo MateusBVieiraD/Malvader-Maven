@@ -49,6 +49,7 @@ public class FuncionarioLogin extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 String login = funcionarioLogin.getText();
                 String senha = new String(funcionarioSenha.getPassword());
+                Sessao.setUser(login);
                 var funcionarioControl = new FuncionarioController();
                 if(funcionarioControl.login(login, senha, TipoUsuario.FUNCIONARIO)){
                     frame.Show("MenuFuncionario");

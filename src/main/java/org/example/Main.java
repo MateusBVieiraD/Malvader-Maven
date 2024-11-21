@@ -60,6 +60,11 @@ public class Main {
         relatorio.setConteudo("1250");
         relatorio.setTimestamp(Timestamp.valueOf("2024-10-09 10:30:00"));
 
+        Relatorio relatorio2 = new Relatorio();
+        relatorio2.setTipoRelatorio("SAQUE");
+        relatorio2.setConteudo("1250");
+        relatorio2.setTimestamp(Timestamp.valueOf("2024-10-09 10:30:00"));
+
 
 
 
@@ -111,8 +116,6 @@ public class Main {
 
         clienteController.saque("Mateus","oiteste123",600);
 */
-        RelatorioCSV relatorioCSV = new RelatorioCSV();
-        relatorioCSV.relatorioCSV();
 
         //ClienteController.extrato("Mateus","oiteste123");
 

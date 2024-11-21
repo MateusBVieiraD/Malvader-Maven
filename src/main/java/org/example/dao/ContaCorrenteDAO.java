@@ -79,6 +79,7 @@ public class ContaCorrenteDAO {
     }
 
     public ContaCorrente buscarContaCorrenteConta(int id){
+
         try {
             return entityManager.createQuery("SELECT e FROM ContaCorrente e WHERE e.conta.id = :id", ContaCorrente.class)
                     .setParameter("id", id)

@@ -1,5 +1,6 @@
 package org.example.controller;
 
+import org.example.bancoController.ExtratoCSV;
 import org.example.dao.ClienteDAO;
 import org.example.dao.ContaDAO;
 import org.example.dao.UsuarioDAO;
@@ -42,26 +43,30 @@ public class ClienteController {
         ContaDAO.atualizarSaldo(retorno3,valor);
     }
 
-    public void saque(String user,String password,double valor){
+    public boolean saque(String user,String password,double valor){
         int retorno3 = ContaDAO.verificarContaRelacionada(usuarioDao.consultarClienteRelacionado(clienteDAO.buscarporId(user,password)));
-        ContaDAO.sacarSaldo(retorno3, valor);
+        return ContaDAO.sacarSaldo(retorno3, valor);
     }
 
-    public void saldo(String user, String password, double valor){
+    public BigDecimal saldo(String user, String password){
         UsuarioDAO usuarioDAO = new UsuarioDAO();
 
         if (usuarioDAO.validarUsuario(user, password, TipoUsuario.CLIENTE)){
             int retorno3 = ContaDAO.verificarContaRelacionada(usuarioDao.consultarClienteRelacionado(clienteDAO.buscarporId(user,password)));
-            BigDecimal retornoPraView = ContaDAO.verificarSaldo(retorno3);
+            return ContaDAO.verificarSaldo(retorno3);
         }else{
             Exception e = null;
             e.printStackTrace();
         }
         clienteDAO.fechar();
+        return null;
     }
 
-    public static void extrato(String user, String password, TipoUsuario tipoUsuario ) {
+    public static void extrato(String user, String password, TipoUsuario tipoUsuario ) throws IOException {
         UsuarioDAO usuarioDAO = new UsuarioDAO();
+        ExtratoCSV extratoCSV = new ExtratoCSV();
+        extratoCSV.extratoCSV();
+
         File file1 = new File("extrato.csv");
 
         if (usuarioDAO.validarUsuario(user, password, tipoUsuario)) {

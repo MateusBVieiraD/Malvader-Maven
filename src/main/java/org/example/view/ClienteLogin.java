@@ -53,7 +53,6 @@ public class ClienteLogin extends JPanel {
             String nome = clienteLogin.getText();
             String senha = new String(clienteSenha.getPassword());
             Sessao.setUser(nome);
-            Sessao.setPassword(senha);
 
             var clienteControl = new ClienteController();
             if(clienteControl.login(nome, senha, TipoUsuario.CLIENTE)){

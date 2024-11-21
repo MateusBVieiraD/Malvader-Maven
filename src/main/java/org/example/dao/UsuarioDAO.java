@@ -2,7 +2,6 @@ package org.example.dao;
 
 import jakarta.persistence.*;
 import org.example.config.EntityFactory;
-import org.example.entity.ContaEntity;
 import org.example.entity.TipoConta;
 import org.example.entity.TipoUsuario;
 import org.example.entity.UsuarioEntity;
@@ -80,6 +79,11 @@ public class UsuarioDAO {
         }
     }
 
+    public UsuarioEntity verificarExistenciaCpf(String cpf) {
+        return entityManager.createQuery("SELECT u FROM UsuarioEntity u WHERE u.cpf = :cpf", UsuarioEntity.class)
+                .setParameter("cpf", cpf)
+                .getSingleResult();
+    }
 
     public boolean validarCpfParaConta(String cpf, TipoConta tipoConta) {
         try {
@@ -165,6 +169,7 @@ public class UsuarioDAO {
             }
             throw e;  // Re-throw exception
         }
+
     }
 
 
