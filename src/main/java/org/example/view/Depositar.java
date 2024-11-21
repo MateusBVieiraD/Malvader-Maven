@@ -19,13 +19,13 @@ public class Depositar extends JPanel {
         voltarBotao.setBounds(5, 5, 30, 30);
         add(voltarBotao);
 
-        valorDepositar.setBounds(10, 25, 350, 25);
+        valorDepositar.setBounds(10, 75, 350, 25);
         add(valorDepositar);
 
-        depositarValor.setBounds(10, 50, 165, 25);
+        depositarValor.setBounds(10, 100, 165, 25);
         add(depositarValor);
 
-        depositar.setBounds(10, 75, 80, 30);
+        depositar.setBounds(10, 150, 80, 30);
         add(depositar);
 
         voltarBotao.addActionListener(e -> frame.Show("MenuCliente"));

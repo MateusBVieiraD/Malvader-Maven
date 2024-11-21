@@ -1,6 +1,5 @@
 package org.example.view;
 
-import org.example.controller.FuncionarioController;
 import org.example.controller.UsuarioController;
 import org.example.entity.TipoUsuario;
 

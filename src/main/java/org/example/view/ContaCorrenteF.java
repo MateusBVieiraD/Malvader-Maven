@@ -21,7 +21,7 @@ public class ContaCorrenteF extends JPanel {
         var UserControl = new UsuarioController();
 
         setLayout(null);
-        setSize(900, 900);
+        setSize(1200, 900);
         setBackground(new Color(255, 255, 255));
 
         var titulo = new JLabel("Criar conta corrente");
@@ -161,7 +161,7 @@ public class ContaCorrenteF extends JPanel {
         enderecoCliente.setBounds(10, 425, 165, 25);
         add(enderecoCliente);
 
-        enderecoText.setBounds(10, 450, 265, 25);
+        enderecoText.setBounds(10, 450, 165, 25);
         add(enderecoText);
 
         cepCliente.setBounds(10, 475, 350, 25);

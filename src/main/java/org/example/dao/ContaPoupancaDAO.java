@@ -43,8 +43,9 @@ public class ContaPoupancaDAO {
     public boolean remover(ContaPoupanca contaPoupanca){
         EntityTransaction transaction = entityManager.getTransaction();
         try {
+            ContaPoupanca contaPoupanca1 = entityManager.find(ContaPoupanca.class, contaPoupanca.getId());
             transaction.begin();
-            entityManager.remove(contaPoupanca);
+            entityManager.remove(contaPoupanca1);
             transaction.commit();
             return true;
 
@@ -83,7 +84,7 @@ public class ContaPoupancaDAO {
 
     public ContaPoupanca buscarContaPoupancaConta(int id){
         try {
-            return entityManager.createQuery("SELECT e FROM ContaPoupanca e WHERE e.conta = :id", ContaPoupanca.class)
+            return entityManager.createQuery("SELECT e FROM ContaPoupanca e WHERE e.conta.id = :id", ContaPoupanca.class)
                     .setParameter("id", id)
                     .getSingleResult();
         } catch (Exception e) {

@@ -1,5 +1,6 @@
 package org.example.view;
 
+import org.example.Main;
 import org.example.controller.ClienteController;
 import org.example.controller.UsuarioController;
 import org.example.entity.TipoUsuario;
@@ -49,12 +50,15 @@ public class ClienteLogin extends JPanel {
         add(botaoLoginCliente);
 
         botaoLoginCliente.addActionListener(e -> {
-            String usuario = clienteLogin.getText();
+            String nome = clienteLogin.getText();
             String senha = new String(clienteSenha.getPassword());
+            Sessao.setUser(nome);
+            Sessao.setPassword(senha);
+
             var clienteControl = new ClienteController();
-            if(clienteControl.login(usuario, senha, TipoUsuario.CLIENTE)){
+            if(clienteControl.login(nome, senha, TipoUsuario.CLIENTE)){
                 frame.Show("MenuCliente");
-            } else{
+            } else {
                 JOptionPane.showMessageDialog(frame, "Usuário ou senha inválido!");
                 frame.Show("Home");
             }

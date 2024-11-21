@@ -12,7 +12,7 @@ import java.sql.Timestamp;
 import java.time.LocalDate;
 
 public class Main {
-
+    public static String nome = "A";
     public static void main(String[] args) throws IOException {
 
         var view = new Frame();
@@ -115,6 +115,7 @@ public class Main {
         relatorioCSV.relatorioCSV();
 
         //ClienteController.extrato("Mateus","oiteste123");
+
 
 
         funcionarioController.fecharOperacao();

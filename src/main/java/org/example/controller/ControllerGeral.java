@@ -1,7 +1,7 @@
 package org.example.controller;
+import org.example.Main;
 import org.example.dao.*;
 import org.example.entity.*;
-import org.example.modelo.Conta;
 
 import java.time.LocalDate;
 
@@ -47,6 +47,7 @@ public class ControllerGeral {
             if (contaEntity != null) {
                 Cliente cliente = contaEntity.getCliente();
                 UsuarioEntity usuario = cliente.getUsuario();
+
 
                 if (contaCorrenteDAO.buscarContaCorrenteConta(contaEntity.getId()) != null){
                     ContaCorrente contaCorrente = contaCorrenteDAO.buscarContaCorrenteConta(contaEntity.getId());

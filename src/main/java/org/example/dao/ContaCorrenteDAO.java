@@ -3,10 +3,9 @@ package org.example.dao;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 import org.example.config.EntityFactory;
-import org.example.entity.Cliente;
 import org.example.entity.ContaCorrente;
 import org.example.entity.ContaEntity;
-import org.example.entity.Endereco;
+import org.example.entity.ContaPoupanca;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -53,6 +52,7 @@ public class ContaCorrenteDAO {
         }
     }
 
+
     public ContaCorrente update(ContaCorrente contaCorrente){
         EntityTransaction transaction = entityManager.getTransaction();
         try {
@@ -80,13 +80,16 @@ public class ContaCorrenteDAO {
 
     public ContaCorrente buscarContaCorrenteConta(int id){
         try {
-            return entityManager.createQuery("SELECT e FROM ContaCorrente e WHERE e.conta = :id", ContaCorrente.class)
+            return entityManager.createQuery("SELECT e FROM ContaCorrente e WHERE e.conta.id = :id", ContaCorrente.class)
                     .setParameter("id", id)
                     .getSingleResult();
+
         } catch (Exception e) {
             return null;
         }
     }
+
+
 
     public void fechar() {
         entityManager.close();

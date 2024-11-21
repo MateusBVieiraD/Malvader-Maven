@@ -22,6 +22,8 @@ public class ContaController {
     public void consultarConta(String numeroConta){
 
 
+
+
     }
 
     public String consultarContaParaRemover(String numeroConta){
@@ -37,7 +39,7 @@ public class ContaController {
 
 
 
-            return "Informaçõs do usuario a ser deletado " +
+            return "Informações do usuario a ser deletado " +
                 ", nome='" + usuario.getNome() + '\'' +
                 ", cpf='" + usuario.getCpf() + '\'' +
                 ", dataNascimento=" + usuario.getDataNascimento() +

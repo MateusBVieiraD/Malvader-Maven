@@ -39,9 +39,13 @@ public class MenuCliente extends JPanel {
 
         saldoCB.addActionListener(e -> frame.Show("Saldo"));
 
-        depositoCB.addActionListener(e -> frame.Show("ConfirmarLogin"));
+        depositoCB.addActionListener(e -> {
+            JPasswordField
+        });
 
-        saqueCB.addActionListener(e -> frame.Show("Saque"));
+        saqueCB.addActionListener(e -> {
+
+        });
 
         extratoCB.addActionListener(e -> frame.Show("Extrato"));
 

@@ -3,6 +3,8 @@ package org.example.entity;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "conta")
@@ -28,6 +30,36 @@ public class ContaEntity {
     @ManyToOne
     @JoinColumn(name = "cliente_id")
     private Cliente cliente;
+
+
+
+
+
+    /*public void addContaCorrente(ContaCorrente contaCorrente) {
+        contasCorrente.add(contaCorrente);
+        contaCorrente.setConta(this);
+    }
+
+    public void addContaPoupanca(ContaPoupanca contaPoupanca) {
+        contasPoupanca.add(contaPoupanca);
+        contaPoupanca.setConta(this);
+    }
+
+    public void removeContaCorrente(ContaCorrente contaCorrente) {
+        contasCorrente.remove(contaCorrente);
+        contaCorrente.setConta(null);
+    }
+
+    public void removeContaPoupanca(ContaPoupanca contaPoupanca) {
+        contasPoupanca.remove(contaPoupanca);
+        contaPoupanca.setConta(null);
+    }*/
+
+
+
+
+
+
 
     public ContaEntity() {}
 
