@@ -27,40 +27,32 @@ public class ControllerGeral {
             ContaDAO contaDAO = new ContaDAO();
             ClienteDAO clienteDAO = new ClienteDAO();
             EnderecoDAO enderecoDAO = new EnderecoDAO();
-            TransacaoDAO transacaoDAO = new TransacaoDAO();
-            ContaCorrenteDAO contaCorrenteDAO = new ContaCorrenteDAO();
-            ContaPoupancaDAO contaPoupancaDAO = new ContaPoupancaDAO();
 
 
             ContaEntity contaEntity = contaDAO.buscarNumeroConta(numeroConta);
-            Cliente cliente = contaEntity.getCliente();
-            UsuarioEntity usuarioEntity = cliente.getUsuario();
+            System.out.println(contaEntity.getId());
+            if (contaEntity != null) {
+                Cliente cliente = contaEntity.getCliente();
+                UsuarioEntity usuario = cliente.getUsuario();
 
-            int retornoIdUsuario = usuarioEntity.getId();
-            Endereco endereco = enderecoDAO.buscarEnderecoUsuario(retornoIdUsuario);
-            Transacao transacao = transacaoDAO.buscarTransacaoConta(contaEntity.getId());
-            ContaCorrente contaCorrente = new ContaCorrente();
+                // 1. Remover o cliente
+                contaDAO.remover(contaEntity);
 
-            ContaCorrente contaCorrente1 = contaCorrenteDAO.buscarContaCorrenteConta(contaEntity.getId());
-            ContaPoupanca contaPoupanca = contaPoupancaDAO.buscarContaPoupancaConta(contaEntity.getId());
+                Endereco endereco = enderecoDAO.buscarEnderecoUsuario(usuario.getId());
+                if (endereco != null) {
 
-            if (contaCorrente1 != null){
-                contaCorrenteDAO.remover(contaCorrente1);
+                    enderecoDAO.remover(endereco); // Remove o endereço, se existir
+                }
+                System.out.println(clienteDAO.removerClienteForcado(cliente.getId())); // Remove o cliente, removendo a chave estrangeira do usuário na tabela cliente
+
+                // 2. Remover o endereço associado ao usuário
+
+
+                // 3. Remover a conta// Remove a conta
+
+                // 4. Finalmente, agora podemos remover o usuário
+                usuarioDAO.removerUsuarioForcado(usuario.getId()); // Remove o usuário
             }
-
-            if (contaPoupanca != null){
-                contaPoupancaDAO.remover(contaPoupanca);
-            }
-
-            enderecoDAO.remover(endereco);
-            transacaoDAO.remover(transacao);
-
-
-            contaDAO.remover(contaEntity);
-            clienteDAO.remover(cliente);
-            usuarioDAO.remover(usuarioEntity);
-
-
         }
     }
 

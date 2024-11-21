@@ -70,11 +70,10 @@ public class TransacaoDAO {
 
     public Transacao buscarTransacaoConta(int id){
         try {
-            return entityManager.createQuery("SELECT e FROM Transacao e WHERE e.conta_id = :id", Transacao.class)
+            return entityManager.createQuery("SELECT e FROM Transacao e WHERE e.conta = :id", Transacao.class)
                     .setParameter("id", id)
                     .getSingleResult();
         } catch (Exception e) {
-            e.printStackTrace();
             return null;
         }
     }

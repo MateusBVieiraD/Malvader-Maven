@@ -4,11 +4,7 @@ import jakarta.persistence.*;
 
 import org.example.config.EntityFactory;
 import org.example.entity.Cliente;
-import org.example.entity.ContaEntity;
 import org.example.entity.UsuarioEntity;
-import org.example.modelo.Usuario;
-
-import java.util.List;
 
 public class ClienteDAO {
     private final EntityManager entityManager;
@@ -33,6 +29,27 @@ public class ClienteDAO {
             throw e;
         }
     }
+
+    public boolean removerClienteForcado(int clienteId) {
+        EntityTransaction transaction = entityManager.getTransaction();
+        try {
+            transaction.begin();
+
+            // Consulta nativa para remover o cliente diretamente (sem verificar as dependências)
+            entityManager.createNativeQuery("DELETE FROM cliente WHERE id = :clienteId")
+                    .setParameter("clienteId", clienteId)
+                    .executeUpdate();
+
+            transaction.commit();
+        } catch (RuntimeException e) {
+            if (transaction.isActive()) {
+                transaction.rollback();
+            }
+            throw e;  // Re-throw exception
+        }
+        return false;
+    }
+
 
     public boolean remover(Cliente cliente){
         EntityTransaction transaction = entityManager.getTransaction();

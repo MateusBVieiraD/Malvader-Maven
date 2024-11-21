@@ -80,11 +80,10 @@ public class ContaCorrenteDAO {
 
     public ContaCorrente buscarContaCorrenteConta(int id){
         try {
-            return entityManager.createQuery("SELECT e FROM conta_corrente e WHERE e.conta_id = :id", ContaCorrente.class)
+            return entityManager.createQuery("SELECT e FROM ContaCorrente e WHERE e.conta = :id", ContaCorrente.class)
                     .setParameter("id", id)
                     .getSingleResult();
         } catch (Exception e) {
-            e.printStackTrace();
             return null;
         }
     }

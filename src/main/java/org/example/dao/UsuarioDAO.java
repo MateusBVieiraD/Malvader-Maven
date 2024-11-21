@@ -148,6 +148,26 @@ public class UsuarioDAO {
         }
     }
 
+    public void removerUsuarioForcado(int usuarioId) {
+        EntityTransaction transaction = entityManager.getTransaction();
+        try {
+            transaction.begin();
+
+            // Consulta nativa para remover o usuário diretamente (sem verificar as dependências)
+            entityManager.createNativeQuery("DELETE FROM usuario WHERE id = :usuarioId")
+                    .setParameter("usuarioId", usuarioId)
+                    .executeUpdate();
+
+            transaction.commit();
+        } catch (RuntimeException e) {
+            if (transaction.isActive()) {
+                transaction.rollback();
+            }
+            throw e;  // Re-throw exception
+        }
+    }
+
+
 
     public void fechar(){
         entityManager.close();

@@ -23,13 +23,6 @@ public class Frame extends JFrame {
         }
 
         // Inicializando uma imagem
-        var image = new ImageIcon(Objects.requireNonNull(getClass().getResource("/SimplistaPorIA.jpg")));
-        final int largura = 200;
-        final int altura = 200;
-        var imagemRedimensao = image.getImage().getScaledInstance(largura, altura, Image.SCALE_AREA_AVERAGING);
-        var imagemRedimension = new ImageIcon(imagemRedimensao);
-        var label = new JLabel(imagemRedimension);
-        label.setBounds(10, 10, 200, 200);
 
         // Inicialização dos componentes:
 
@@ -109,12 +102,6 @@ public class Frame extends JFrame {
 //        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 
         // Setando se a imagem está sendo carregada corretamente
-        if (image.getIconWidth() == -1) {  // largura -1 indica que a imagem não foi carregada
-            System.out.println("Erro: Imagem não encontrada ou caminho incorreto.");
-        } else {
-            System.out.println("Imagem carregada com sucesso!");
-        }
-
         // Funcionabilidade dos botões
 //        Home.addActionListener(e -> cardLayout.show(panelConteiner, "LoginCliente"));
 //        Home.addActionListener(e -> System.exit(0));

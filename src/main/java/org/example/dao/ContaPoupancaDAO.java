@@ -83,11 +83,10 @@ public class ContaPoupancaDAO {
 
     public ContaPoupanca buscarContaPoupancaConta(int id){
         try {
-            return entityManager.createQuery("SELECT e FROM conta_poupanca e WHERE e.id_conta = :id", ContaPoupanca.class)
+            return entityManager.createQuery("SELECT e FROM ContaPoupanca e WHERE e.conta = :id", ContaPoupanca.class)
                     .setParameter("id", id)
                     .getSingleResult();
         } catch (Exception e) {
-            e.printStackTrace();
             return null;
         }
     }
