@@ -7,26 +7,40 @@ import java.time.LocalDate;
 
 
 public class ControllerGeral {
-    public int criarConta(String cpf, String senha, String nome, String telefone, TipoUsuario tipoUsuario, LocalDate dataNascimento, String cep,String local, int numeroCasa, String bairro, String cidade, String estado, String agencia, TipoConta tipoConta ) {
+    public int criarConta(String cpf, String senha, String nome, String telefone, TipoUsuario tipoUsuario, LocalDate dataNascimento, String cep,String local, int numeroCasa, String bairro, String cidade, String estado, String agencia, TipoConta tipoConta, String cargo, String codigo ) {
 
         UsuarioDAO usuarioDAO = new UsuarioDAO();
-        int retornoIdUsuario = usuarioDAO.criarUsuario(cpf, senha, nome, telefone, tipoUsuario, dataNascimento);
-        EnderecoController enderecoController = new EnderecoController();
-        enderecoController.criarEndereco(retornoIdUsuario, cep, local, numeroCasa, bairro, cidade, estado);
-        ClienteDAO clienteDAO = new ClienteDAO();
-        int retornoIdCliente = clienteDAO.criarCliente(retornoIdUsuario);
-        ContaDAO contaDAO = new ContaDAO();
-        int retornoIdConta = contaDAO.criarConta(retornoIdCliente, agencia, tipoConta);
-        return retornoIdConta;
+        if(tipoUsuario == TipoUsuario.CLIENTE){
+            int retornoIdUsuario = usuarioDAO.criarUsuario(cpf, senha, nome, telefone, tipoUsuario, dataNascimento);
+            EnderecoController enderecoController = new EnderecoController();
+            enderecoController.criarEndereco(retornoIdUsuario, cep, local, numeroCasa, bairro, cidade, estado);
+            ClienteDAO clienteDAO = new ClienteDAO();
+            int retornoIdCliente = clienteDAO.criarCliente(retornoIdUsuario);
+            ContaDAO contaDAO = new ContaDAO();
+            int retornoIdConta = contaDAO.criarConta(retornoIdCliente, agencia, tipoConta);
+            return retornoIdConta;
+        }else if (tipoUsuario == TipoUsuario.FUNCIONARIO){
+            int retornoIdUsuario = usuarioDAO.criarUsuario(cpf, senha, nome, telefone, tipoUsuario, dataNascimento);
+            EnderecoController enderecoController = new EnderecoController();
+            enderecoController.criarEndereco(retornoIdUsuario, cep, local, numeroCasa, bairro, cidade, estado);
+            FuncionarioDAO  funcionarioDAO = new FuncionarioDAO();
+            int retornoStatus = funcionarioDAO.criarFuncionario(cargo, codigo, retornoIdUsuario);
+            return retornoStatus;
+
+        }else{
+            System.out.println("Algo deu errado");
+        }
+        return 0;
     }
 
-    public boolean removerConta(String user, String password, TipoUsuario tipoUsuario, String numeroConta) {
+    public Boolean removerConta(String numeroConta) {
         UsuarioDAO usuarioDAO = new UsuarioDAO();
-        if (usuarioDAO.validarUsuario(user, password, tipoUsuario)) {
 
             ContaDAO contaDAO = new ContaDAO();
             ClienteDAO clienteDAO = new ClienteDAO();
             EnderecoDAO enderecoDAO = new EnderecoDAO();
+            ContaCorrenteDAO contaCorrenteDAO = new ContaCorrenteDAO();
+            ContaPoupancaDAO contaPoupancaDAO = new ContaPoupancaDAO();
 
 
             ContaEntity contaEntity = contaDAO.buscarNumeroConta(numeroConta);
@@ -34,12 +48,19 @@ public class ControllerGeral {
                 Cliente cliente = contaEntity.getCliente();
                 UsuarioEntity usuario = cliente.getUsuario();
 
-                // 1. Remover o cliente
+                if (contaCorrenteDAO.buscarContaCorrenteConta(contaEntity.getId()) != null){
+                    ContaCorrente contaCorrente = contaCorrenteDAO.buscarContaCorrenteConta(contaEntity.getId());
+                    contaCorrenteDAO.remover(contaCorrente);
+                }else if(contaPoupancaDAO.buscarContaPoupancaConta(contaEntity.getId()) != null){
+                    ContaPoupanca contaPoupanca = contaPoupancaDAO.buscarContaPoupancaConta(contaEntity.getId());
+                    contaPoupancaDAO.remover(contaPoupanca);
+                }
+
                 contaDAO.remover(contaEntity);
 
                 Endereco endereco = enderecoDAO.buscarEnderecoUsuario(usuario.getId());
 
-                    enderecoDAO.remover(endereco);
+                enderecoDAO.remover(endereco);
 
                 clienteDAO.remover(cliente.getId());
 
@@ -47,9 +68,11 @@ public class ControllerGeral {
                 usuarioDAO.remover(usuario.getId());
 
                 return true;
+
             }
-        }
+
+
+        return false;
     }
-
-
 }
+

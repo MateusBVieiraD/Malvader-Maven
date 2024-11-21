@@ -39,6 +39,7 @@ public class Frame extends JFrame {
         var deposito = new Depositar(this);
         var saque = new Saque(this);
         var encerrarConta = new EncerramentoConta(this);
+        var encerramentoConfirm = new EncerrarContaConfirm(this);
         var cadastroFuncionarios = new CadastroFuncionarios(this);
         var consultarDados = new ConsultarDados(this);
         var alterarDados = new AlterarDados(this);
@@ -82,6 +83,7 @@ public class Frame extends JFrame {
         container.add(saque, "Saque");
         container.add(extrato, "Extrato");
         container.add(encerrarConta, "EncerrarConta");
+        container.add(encerramentoConfirm, "EncerramentoContaConfirm");
         container.add(cadastroFuncionarios, "CadastroFuncionarios");
         container.add(consultarDados, "ConsultarDados");
         container.add(alterarDados, "AlterarDados");

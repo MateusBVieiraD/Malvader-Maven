@@ -100,8 +100,8 @@ public class Main {
         ControllerGeral controllerGeral = new ControllerGeral();
 
 
-        controllerGeral.criarConta("123456", "teste123", "Yago", "64132456", TipoUsuario.CLIENTE, LocalDate.parse("2024-10-12"), "798123", "Vicente Pires",  20, "vicente", "Brasilia", "DF", "BB", TipoConta.POUPANCA);
-        controllerGeral.criarConta("123456789", "teste123", "Mateus", "654654654654", TipoUsuario.CLIENTE, LocalDate.parse("2024-10-12"), "798123", "AC",  20, "AC", "Brasilia", "DF", "Malvader", TipoConta.CORRENTE);
+        controllerGeral.criarConta("123456", "teste123", "Yago", "64132456", TipoUsuario.CLIENTE, LocalDate.parse("2024-10-12"), "798123", "Vicente Pires",  20, "vicente", "Brasilia", "DF", "BB", TipoConta.POUPANCA, "", "");
+        controllerGeral.criarConta("123456789", "teste123", "Mateus", "654654654654", TipoUsuario.CLIENTE, LocalDate.parse("2024-10-12"), "798123", "AC",  20, "AC", "Brasilia", "DF", "Malvader", TipoConta.CORRENTE,"","");
 
 
         /*boolean teste = usuarioDAO.validarUsuario("Mateus","oiteste123");
@@ -116,7 +116,6 @@ public class Main {
 
         //ClienteController.extrato("Mateus","oiteste123");
 
-        controllerGeral.removerConta("Luis", "teste123", TipoUsuario.FUNCIONARIO, "1");
 
         funcionarioController.fecharOperacao();
         clienteController.fecharOperacao();

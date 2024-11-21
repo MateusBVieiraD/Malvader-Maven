@@ -138,7 +138,6 @@ public class ContaDAO {
             TransacaoDAO transacaoDAO = new TransacaoDAO();
             transacaoDAO.criarTransacao(contaPraAtualizar,saldo,TipoTransacao.DEPOSITO);
 
-            // Não é necessário persistir pois a entidade já está gerenciada
             transaction.commit();
             System.out.println("Saldo atualizado com sucesso!");
 
@@ -177,6 +176,9 @@ public class ContaDAO {
 
     }
 
+
+
+
     public ContaEntity buscarNumeroConta(String numeroConta){
         try {
             return entityManager.createQuery("SELECT c FROM ContaEntity c WHERE c.numeroConta = :numeroConta", ContaEntity.class)
@@ -187,4 +189,6 @@ public class ContaDAO {
             return null;
         }
     }
+
+
 }

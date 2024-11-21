@@ -1,9 +1,7 @@
 package org.example.controller;
 
-import org.example.dao.ContaDAO;
-import org.example.dao.UsuarioDAO;
-import org.example.entity.ContaEntity;
-import org.example.entity.Relatorio;
+import org.example.dao.*;
+import org.example.entity.*;
 
 
 public class ContaController {
@@ -17,13 +15,41 @@ public class ContaController {
         return contaDao.update(contaEntity);
     }
 
-    public void ContaSacar(){}
-
     public void fecharOperacao(){
         contaDao.fechar();
     }
 
-    public void criarContaCp(){
+    public void consultarConta(String numeroConta){
+
+
+    }
+
+    public String consultarContaParaRemover(String numeroConta){
+
+        ContaDAO contaDAO = new ContaDAO();
+
+
+        ContaEntity contaEntity = contaDAO.buscarNumeroConta(numeroConta);
+
+        if (contaEntity != null) {
+            Cliente cliente = contaEntity.getCliente();
+            UsuarioEntity usuario = cliente.getUsuario();
+
+
+
+            return "Informaçõs do usuario a ser deletado " +
+                ", nome='" + usuario.getNome() + '\'' +
+                ", cpf='" + usuario.getCpf() + '\'' +
+                ", dataNascimento=" + usuario.getDataNascimento() +
+                ", telefone='" + usuario.getTelefone() + '\'' +
+                ", tipoUsuario=" + usuario.getTipoUsuario() +
+                ", saldo= " + contaEntity.getSaldo() +
+                ", agencia= " + contaEntity.getAgencia() +
+                ", numero da conta= " + contaEntity.getNumeroConta() +
+                ", tipo da conta= " + contaEntity.getTipoconta();
+        }else{
+            return "essa conta não existe";
+        }
 
     }
 

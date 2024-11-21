@@ -64,7 +64,7 @@ public class ContaPoupancaF extends JPanel {
         var numeroConta = new JLabel("Número da conta:");
         var nomeCliente = new JLabel("Nome do cliente:");
         var cpfCliente = new JLabel("CPF do cliente:");
-        var dataNascimento = new JLabel("Data de nascimento (YYYY/MM/DD):");
+        var dataNascimento = new JLabel("Data de nascimento (YYYY-MM-DD):");
         var telefoneContato = new JLabel("Telefone de contato:");
         var enderecoCliente = new JLabel("Endereço do cliente:");
         var cepCliente = new JLabel("CEP:");
@@ -97,7 +97,7 @@ public class ContaPoupancaF extends JPanel {
         JFormattedTextField nascimentoText;
         try{
 
-            MaskFormatter nascimentoMask = new MaskFormatter("####/##/##");
+            MaskFormatter nascimentoMask = new MaskFormatter("####-##-##");
             nascimentoText = new JFormattedTextField(nascimentoMask);
             nascimentoText.setColumns(10);
 
@@ -285,7 +285,7 @@ public class ContaPoupancaF extends JPanel {
             }else if (taxaRendimento.isEmpty()) {
                 JOptionPane.showMessageDialog(frame, "O campo da taxa não foi preenchido!");
             }else {
-                boolean verificar = contaPoupancaController.criarContaP(cpf, senha, username, telefoneC, TipoUsuario.CLIENTE, LocalDate.parse(nascimento), cep, local, Integer.parseInt(numerocasa), bairro, cidade, estado, agenciaT, TipoConta.POUPANCA, BigDecimal.valueOf(Double.parseDouble(taxaRendimento)));
+                boolean verificar = contaPoupancaController.criarContaP(cpf, senha, username, telefoneC, TipoUsuario.CLIENTE, LocalDate.parse(nascimento), cep, local, Integer.parseInt(numerocasa), bairro, cidade, estado, agenciaT, TipoConta.POUPANCA, BigDecimal.valueOf(Double.parseDouble(taxaRendimento)), "","");
                 numeroCasaText.setText("");
                 nomeText.setText("");
                 cpfText.setText("");

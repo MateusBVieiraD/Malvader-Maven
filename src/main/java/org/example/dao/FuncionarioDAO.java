@@ -1,11 +1,10 @@
 package org.example.dao;
 
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
-import jakarta.persistence.Persistence;
 import org.example.config.EntityFactory;
 import org.example.entity.Funcionario;
+import org.example.entity.UsuarioEntity;
 
 public class FuncionarioDAO {
     private final EntityManager entityManager;
@@ -15,12 +14,13 @@ public class FuncionarioDAO {
         entityManager = EntityFactory.getEntityManager();
     }
 
-    public void salvar(Funcionario funcionario) {
+    public int salvar(Funcionario funcionario) {
         EntityTransaction transaction = entityManager.getTransaction();
         try {
             transaction.begin();
             entityManager.persist(funcionario);
             transaction.commit();
+            return 1;
         } catch (RuntimeException e) {
             if (transaction.isActive()) {
                 transaction.rollback();
@@ -40,10 +40,22 @@ public class FuncionarioDAO {
             if (transaction.isActive()) {
                 transaction.rollback();
             }
-            throw new RuntimeException("Falha ao atualizar o funcionário", e); // Re-throw exception
+            throw new RuntimeException("Falha ao atualizar o funcionário", e);
         }
     }
 
+    public int criarFuncionario(String cargo, String codigo, int usuarioEntity){
+        Funcionario funcionario = new Funcionario();
+
+        funcionario.setCargo(cargo);
+        funcionario.setCodigoFuncionario(codigo);
+        UsuarioEntity usuarioEntity1 = entityManager.find(UsuarioEntity.class, usuarioEntity);
+        funcionario.setUsuario(usuarioEntity1);
+
+        int retornoStatus = salvar(funcionario);
+        return retornoStatus;
+
+    }
 
 
 

@@ -9,6 +9,6 @@ public class ConsultarCliente extends JPanel {
         setSize(500, 400);
         setLayout(null);
 
-
+        
     }
 }

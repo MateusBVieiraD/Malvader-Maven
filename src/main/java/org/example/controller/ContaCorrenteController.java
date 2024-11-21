@@ -24,10 +24,10 @@ public class ContaCorrenteController {
         contaCorrenteDAO.fechar();
     }
 
-    public boolean criarContaC(String cpf, String senha, String nome, String telefone, TipoUsuario tipoUsuario, LocalDate dataNascimento, String cep, String local, int numeroCasa, String bairro, String cidade, String estado, String agencia, TipoConta tipoConta, LocalDate dataVencimento, BigDecimal limite){
+    public boolean criarContaC(String cpf, String senha, String nome, String telefone, TipoUsuario tipoUsuario, LocalDate dataNascimento, String cep, String local, int numeroCasa, String bairro, String cidade, String estado, String agencia, TipoConta tipoConta, LocalDate dataVencimento, BigDecimal limite, String cargo, String codigo){
 
         ControllerGeral controllerGeral = new ControllerGeral();
-        int idRetorno = controllerGeral.criarConta(cpf, senha, nome, telefone, tipoUsuario, dataNascimento, cep, local, numeroCasa, bairro, cidade, estado, agencia, tipoConta);
+        int idRetorno = controllerGeral.criarConta(cpf, senha, nome, telefone, tipoUsuario, dataNascimento, cep, local, numeroCasa, bairro, cidade, estado, agencia, tipoConta, cargo = "", codigo = "");
         boolean statusRetorno = contaCorrenteDAO.criarContaCorrente(idRetorno, dataVencimento, limite);
         return statusRetorno;
     }

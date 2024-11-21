@@ -24,13 +24,11 @@ public class ContaCorrenteF extends JPanel {
         setSize(900, 900);
         setBackground(new Color(255, 255, 255));
 
-
-
         var titulo = new JLabel("Criar conta corrente");
         var agencia = new JLabel("Agência:");
         var numeroConta = new JLabel("Número da conta:");
         var limiteConta = new JLabel("Limite da conta:");
-        var dataVencimento = new JLabel("Data de vencimento (YYYY/MM/DD):");
+        var dataVencimento = new JLabel("Data de vencimento (YYYY-MM-DD):");
         var nomeCliente = new JLabel("Nome do cliente:");
         var cpfCliente = new JLabel("CPF do cliente:");
         var dataNascimento = new JLabel("Data de nascimento:");
@@ -66,7 +64,7 @@ public class ContaCorrenteF extends JPanel {
         JFormattedTextField nascimentoText;
         try{
 
-            MaskFormatter nascimentoMask = new MaskFormatter("####/##/##");
+            MaskFormatter nascimentoMask = new MaskFormatter("####-##-##");
             nascimentoText = new JFormattedTextField(nascimentoMask);
             nascimentoText.setColumns(10);
 
@@ -264,7 +262,7 @@ public class ContaCorrenteF extends JPanel {
             } else if (limite.isEmpty()) {
                 JOptionPane.showMessageDialog(frame, "O campo limite da conta não foi preenchido!");
             } else {
-                boolean verificar = contaCorrenteController.criarContaC(cpf, senha, username, telefoneC, TipoUsuario.CLIENTE, LocalDate.parse(nascimento), cep, local, Integer.parseInt(numerocasa), bairro, cidade, estado, agenciaT, TipoConta.CORRENTE, LocalDate.parse(datavencimento), BigDecimal.valueOf(Double.parseDouble(limite)));
+                boolean verificar = contaCorrenteController.criarContaC(cpf, senha, username, telefoneC, TipoUsuario.CLIENTE, LocalDate.parse(nascimento), cep, local, Integer.parseInt(numerocasa), bairro, cidade, estado, agenciaT, TipoConta.CORRENTE, LocalDate.parse(datavencimento), BigDecimal.valueOf(Double.parseDouble(limite)), "", "");
                 numeroCasaText.setText("");
                 nomeText.setText("");
                 cpfText.setText("");

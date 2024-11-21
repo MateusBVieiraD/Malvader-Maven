@@ -2,6 +2,8 @@ package org.example.view;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class MenuFuncionario extends JPanel {
     public MenuFuncionario(Frame frame) {
@@ -18,38 +20,49 @@ public class MenuFuncionario extends JPanel {
         var gerarFB = new JButton("Gerar relatórios");
         var sairFB = new JButton("Sair");
 
-        aberturaFB.setBounds(175, 0, 150, 30);
+        aberturaFB.setBounds(150, 0, 200, 30);
         add(aberturaFB);
 
-        encerramentoFB.setBounds(175, 30, 150, 30);
+        encerramentoFB.setBounds(150, 30, 200, 30);
         add(encerramentoFB);
 
-        consultarFB.setBounds(175, 60, 150, 30);
+        consultarFB.setBounds(150, 60, 200, 30);
         add(consultarFB);
 
-        alterarFB.setBounds(175, 90, 150, 30);
+        alterarFB.setBounds(150, 90, 200, 30);
         add(alterarFB);
 
-        cadastroFB.setBounds(175, 120, 150, 30);
+        cadastroFB.setBounds(150, 120, 200, 30);
         add(cadastroFB);
 
-        gerarFB.setBounds(175, 150, 150, 30);
+        gerarFB.setBounds(150, 150, 200, 30);
         add(gerarFB);
 
-        sairFB.setBounds(175, 180, 150, 30);
+        sairFB.setBounds(150, 180, 200, 30);
         add(sairFB);
 
-        aberturaFB.addActionListener(e -> frame.Show("ContaFuncionario"));
+        aberturaFB.addActionListener(e -> {
+            frame.Show("ContaFuncionario");
+        });
 
-        encerramentoFB.addActionListener(e -> frame.Show("EncerrarConta"));
+        encerramentoFB.addActionListener(e -> {
+            frame.Show("EncerramentoContaConfirm");
+        });
 
-        consultarFB.addActionListener(e -> frame.Show("ConsultarDados"));
+        consultarFB.addActionListener(e -> {
+            frame.Show("ConsultarDados");
+        });
 
-        alterarFB.addActionListener(e -> frame.Show("AlterarDados"));
+        alterarFB.addActionListener(e -> {
+            frame.Show("AlterarDados");
+        });
 
-        cadastroFB.addActionListener(e -> {
-            frame.Show("CadastroFuncionario");
-            frame.resizeFrame(900, 900);
+        cadastroFB.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frame.Show("CadastroFuncionarios");
+                frame.resizeFrame(900, 900);
+            }
         });
 
         sairFB.addActionListener(e -> frame.Show("Home"));

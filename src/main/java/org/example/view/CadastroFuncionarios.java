@@ -1,19 +1,27 @@
 package org.example.view;
 
+import org.example.controller.ControllerGeral;
+import org.example.entity.TipoConta;
+import org.example.entity.TipoUsuario;
+
 import javax.swing.*;
+import javax.swing.text.MaskFormatter;
+import javax.swing.text.PlainDocument;
 import java.awt.*;
+import java.text.ParseException;
+import java.time.LocalDate;
 
 public class CadastroFuncionarios extends JPanel {
     public CadastroFuncionarios(Frame frame){
-        setBackground(new Color(255, 255, 255));
-        setSize(500, 400);
         setLayout(null);
+        setSize(900, 900);
+        setBackground(new Color(255, 255, 255));
 
         var codigoFL = new JLabel("Código funcionário:");
         var cargoFL = new JLabel("Cargo:");
         var nomeFL = new JLabel("Nome do funcionário:");
         var cpfFL = new JLabel("CPF do funcionário:");
-        var datanascimentoFL = new JLabel("Data de nascimento (YYYY/MM/DD):");
+        var datanascimentoFL = new JLabel("Data de nascimento (YYYY-MM-DD):");
         var telefoneFL = new JLabel("Telefone de contato:");
         var enderecoFL = new JLabel("Endereço do funcionário:");
         var cepFL = new JLabel("CEP:");
@@ -27,11 +35,53 @@ public class CadastroFuncionarios extends JPanel {
         var codigoFT = new JTextField();
         var cargoFT = new JTextField();
         var nomeFT = new JTextField();
-        var cpfFT = new JTextField();
-        var datanascimentoFT = new JTextField();
-        var telefoneFT = new JTextField();
+
+        JFormattedTextField cpfFT;
+        try {
+
+            MaskFormatter cpfmask = new MaskFormatter("###.###.###-##");
+            cpfFT = new JFormattedTextField(cpfmask);
+            cpfFT.setColumns(15);
+
+            PlainDocument doc = (PlainDocument) cpfFT.getDocument();
+            doc.setDocumentFilter(new NumericDocumentFilter());
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+
+        JFormattedTextField datanascimentoFT;
+        try{
+
+            MaskFormatter nascimentoMask = new MaskFormatter("####-##-##");
+            datanascimentoFT = new JFormattedTextField(nascimentoMask);
+            datanascimentoFT.setColumns(10);
+
+            PlainDocument doc = (PlainDocument) datanascimentoFT.getDocument();
+            doc.setDocumentFilter(new org.example.view.NumericDocumentFilter());
+        }catch (ParseException e){
+            throw new RuntimeException(e);
+        }
+
+        JFormattedTextField telefoneFT;
+        try {
+            MaskFormatter telefoneMask = new MaskFormatter("(##)#####-####");
+            telefoneFT = new JFormattedTextField(telefoneMask);
+            telefoneFT.setColumns(14);
+        }catch (ParseException e){
+            throw new RuntimeException(e);
+        }
+
         var enderecoFT = new JTextField();
-        var cepFT = new JTextField();
+
+        JFormattedTextField cepFT;
+        try {
+            MaskFormatter cepTextMask = new MaskFormatter("#####-###");
+            cepFT = new JFormattedTextField(cepTextMask);
+            cepFT.setColumns(15);
+        }catch (Exception e){
+            throw new RuntimeException(e);
+        }
+
         var localFT = new JTextField();
         var numerocasaFT = new JTextField();
         var bairroFT = new JTextField();
@@ -39,97 +89,100 @@ public class CadastroFuncionarios extends JPanel {
         var estadoFT = new JTextField();
         var senhaFT = new JTextField();
 
-        var Voltar = new JButton("<");
         var criarFuncionarioB = new JButton("Criar");
+        var Voltar = new JButton("<");
 
         Voltar.setBounds(5, 5, 30, 30);
+        add(Voltar);
 
         codigoFL.setBounds(10, 25, 350, 25);
         add(codigoFL);
 
-        codigoFL.setBounds(10, 50, 165, 25);
+        codigoFT.setBounds(10, 50, 165, 25);
         add(codigoFT);
 
-        codigoFL.setBounds(10, 75, 350, 25);
+        cargoFL.setBounds(10, 75, 350, 25);
         add(cargoFL);
 
-        codigoFL.setBounds(10, 100, 165, 25);
+        cargoFT.setBounds(10, 100, 165, 25);
         add(cargoFT);
 
-        codigoFL.setBounds(10, 125, 350, 25);
+        nomeFL.setBounds(10, 125, 350, 25);
         add(nomeFL);
 
-        codigoFL.setBounds(10, 150, 165, 25);
+        nomeFT.setBounds(10, 150, 165, 25);
         add(nomeFT);
 
-        codigoFL.setBounds(10, 175, 350, 25);
+        cpfFL.setBounds(10, 175, 350, 25);
         add(cpfFL);
 
-        codigoFL.setBounds(10, 200, 165, 25);
+        cpfFT.setBounds(10, 200, 165, 25);
         add(cpfFT);
 
-        codigoFL.setBounds(10, 225, 350, 25);
+        datanascimentoFL.setBounds(10, 225, 350, 25);
         add(datanascimentoFL);
 
-        codigoFL.setBounds(10, 250, 165, 25);
+        datanascimentoFT.setBounds(10, 250, 165, 25);
         add(datanascimentoFT);
 
-        codigoFL.setBounds(10, 275, 350, 25);
+        telefoneFL.setBounds(10, 275, 350, 25);
         add(telefoneFL);
 
-        codigoFL.setBounds(10, 300, 165, 25);
+        telefoneFT.setBounds(10, 300, 165, 25);
         add(telefoneFT);
 
-        codigoFL.setBounds(10, 325, 350, 25);
+        enderecoFL.setBounds(10, 325, 350, 25);
         add(enderecoFL);
 
-        codigoFL.setBounds(10, 350, 165, 25);
+        enderecoFT.setBounds(10, 350, 165, 25);
         add(enderecoFT);
 
-        codigoFL.setBounds(10, 375, 350, 25);
+        cepFL.setBounds(10, 375, 350, 25);
         add(cepFL);
 
-        codigoFL.setBounds(10, 400, 165, 25);
+        cepFT.setBounds(10, 400, 165, 25);
         add(cepFT);
 
-        codigoFL.setBounds(10, 425, 350, 25);
+        localFL.setBounds(10, 425, 350, 25);
         add(localFL);
 
-        codigoFL.setBounds(10, 450, 165, 25);
+        localFT.setBounds(10, 450, 165, 25);
         add(localFT);
 
-        codigoFL.setBounds(10, 475, 350, 25);
+        numerocasaFL.setBounds(10, 475, 350, 25);
         add(numerocasaFL);
 
-        codigoFL.setBounds(10, 500, 165, 25);
+        numerocasaFT.setBounds(10, 500, 165, 25);
         add(numerocasaFT);
 
-        codigoFL.setBounds(10, 525, 350, 25);
+        bairroFL.setBounds(10, 525, 350, 25);
         add(bairroFL);
 
-        codigoFL.setBounds(10, 550, 165, 25);
+        bairroFT.setBounds(10, 550, 165, 25);
         add(bairroFT);
 
-        codigoFL.setBounds(10, 575, 350, 25);
+        cidadeFL.setBounds(10, 575, 350, 25);
         add(cidadeFL);
 
-        codigoFL.setBounds(10, 600, 165, 25);
+        cidadeFT.setBounds(10, 600, 165, 25);
         add(cidadeFT);
 
-        codigoFL.setBounds(10, 625, 350, 25);
+        estadoFL.setBounds(10, 625, 350, 25);
         add(estadoFL);
 
-        codigoFL.setBounds(10, 650, 165, 25);
+        estadoFT.setBounds(10, 650, 165, 25);
         add(estadoFT);
 
-        codigoFL.setBounds(10, 675, 350, 25);
+        senhaFL.setBounds(10, 675, 350, 25);
         add(senhaFL);
 
-        codigoFL.setBounds(10, 700, 165, 25);
+        senhaFT.setBounds(10, 700, 165, 25);
         add(senhaFT);
 
         criarFuncionarioB.setBounds(10, 800, 80, 30);
         add(criarFuncionarioB);
+
+        var controlergeral = new ControllerGeral();
 
         Voltar.addActionListener(e -> {
             frame.Show("MenuFuncionario");
@@ -137,7 +190,71 @@ public class CadastroFuncionarios extends JPanel {
         });
 
         criarFuncionarioB.addActionListener(e -> {
+            String codigoFuncionario = codigoFT.getText();
+            String cargo = cargoFT.getText();
+            String nomeFuncionario = nomeFT.getText();
+            String cpfFuncionario = cpfFT.getText();
+            String dataNascimento = datanascimentoFT.getText();
+            String telefone = telefoneFT.getText();
+            String endereco = enderecoFT.getText();
+            String cep = cepFT.getText();
+            String local = localFT.getText();
+            String numeroCasa = numerocasaFT.getText();
+            String bairro = bairroFT.getText();
+            String cidade = cidadeFT.getText();
+            String estado = estadoFT.getText();
+            String senhaFuncionario = senhaFT.getText();
 
+            if(codigoFuncionario.isEmpty()){
+                JOptionPane.showMessageDialog(frame, "O campo código do funcionário não foi preenchido");
+            } else if (cargo.isEmpty()) {
+                JOptionPane.showMessageDialog(frame, "O campo cargo não foi preenchido!");
+            } else if (nomeFuncionario.isEmpty()) {
+                JOptionPane.showMessageDialog(frame, "O campo nome do funcionário não foi preenchido!");
+            } else if (cpfFuncionario.isEmpty()) {
+                JOptionPane.showMessageDialog(frame, "O campo CPF do funcionário não foi preenchido!");
+            } else if (dataNascimento.isEmpty()) {
+                JOptionPane.showMessageDialog(frame, "O campo data de nascimento não foi preenchido!");
+            } else if (telefone.isEmpty()) {
+                JOptionPane.showMessageDialog(frame, "O campo telefone não foi preenchido!");
+            } else if (endereco.isEmpty()) {
+                JOptionPane.showMessageDialog(frame, "O campo endereço não foi preenchido!");
+            } else if (cep.isEmpty()) {
+                JOptionPane.showMessageDialog(frame, "O campo cep não foi preenchido!");
+            } else if (local.isEmpty()) {
+                JOptionPane.showMessageDialog(frame, "O campo local não foi preenchido!");
+            } else if (numeroCasa.isEmpty()) {
+                JOptionPane.showMessageDialog(frame, "O campo número da casa não foi preenchido!");
+            } else if (bairro.isEmpty()) {
+                JOptionPane.showMessageDialog(frame, "O campo bairro não foi preenchido!");
+            } else if (cidade.isEmpty()) {
+                JOptionPane.showMessageDialog(frame, "O campo cidade não foi preenchido!");
+            } else if (estado.isEmpty()) {
+                JOptionPane.showMessageDialog(frame, "O campo estado não foi preenchido!");
+            } else if (senhaFuncionario.isEmpty()) {
+                JOptionPane.showMessageDialog(frame, "O campo senha não foi preenchido!");
+            } else {
+                int verificacao = controlergeral.criarConta(cpfFuncionario, senhaFuncionario, nomeFuncionario, telefone, TipoUsuario.FUNCIONARIO, LocalDate.parse(dataNascimento), cep, local, Integer.parseInt(numeroCasa), bairro, cidade, estado, "", TipoConta.CORRENTE, cargo, codigoFuncionario);
+                if(verificacao == 1){
+                    JOptionPane.showMessageDialog(frame, "Conta cadastrada com sucesso!");
+                    codigoFT.setText("");
+                    cargoFT.setText("");
+                    nomeFT.setText("");
+                    cpfFT.setText("");
+                    datanascimentoFT.setText("");
+                    telefoneFT.setText("");
+                    enderecoFT.setText("");
+                    cepFT.setText("");
+                    localFT.setText("");
+                    numerocasaFT.setText("");
+                    bairroFT.setText("");
+                    cidadeFT.setText("");
+                    estadoFT.setText("");
+                    senhaFT.setText("");
+                } else {
+                    JOptionPane.showMessageDialog(frame, "Error ao cadastrar o funcionário!");
+                }
+            }
         });
     }
 

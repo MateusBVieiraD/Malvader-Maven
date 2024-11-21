@@ -101,7 +101,7 @@ public class UsuarioDAO {
 
 
 
-    public UsuarioEntity consultarDados(String user, String password){
+    public String consultarDados(String user, String password){
 
         TypedQuery<UsuarioEntity> query = entityManager.createQuery("SELECT u FROM UsuarioEntity u WHERE u.senha = :senha AND u.nome = :nome" , UsuarioEntity.class);
         query.setParameter("senha", password);
@@ -109,7 +109,8 @@ public class UsuarioDAO {
 
         UsuarioEntity usuarioEntity = query.getSingleResult();
 
-        return usuarioEntity;
+        return usuarioEntity.toString();
+
 
 
 
@@ -153,7 +154,6 @@ public class UsuarioDAO {
         try {
             transaction.begin();
 
-            // Consulta nativa para remover o usuário diretamente (sem verificar as dependências)
             entityManager.createNativeQuery("DELETE FROM usuario WHERE id = :usuarioId")
                     .setParameter("usuarioId", usuarioId)
                     .executeUpdate();
