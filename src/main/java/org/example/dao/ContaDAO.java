@@ -3,6 +3,8 @@ package org.example.dao;
 import jakarta.persistence.*;
 import org.example.config.EntityFactory;
 import org.example.entity.*;
+import org.example.modelo.Conta;
+
 import java.math.BigDecimal;
 
 public class ContaDAO {
@@ -47,7 +49,7 @@ public class ContaDAO {
         }
     }
 
-    public static ContaEntity update(ContaEntity conta){
+    public ContaEntity update(ContaEntity conta){
         var a = EntityFactory.getEntityManager();
         EntityTransaction transaction = a.getTransaction();
         try {
@@ -67,7 +69,39 @@ public class ContaDAO {
         entityManager.close();
     }
 
+    public boolean buscarporId(String contaId){
+
+        EntityTransaction transaction = entityManager.getTransaction();
+
+        try {
+            transaction.begin();
+
+            // Consulta nativa para remover a conta diretamente (sem verificar as dependências)
+            String query = "SELECT u FROM ContaEntity u WHERE u.numeroConta = :numero";
+            ContaEntity contaEntity = entityManager.createQuery(query, ContaEntity.class)
+                    .setParameter("numero", contaId)
+                    .getSingleResult();
+
+            transaction.commit();
+
+            return contaEntity != null;
+        } catch (NoResultException e) {
+            // Lida com o caso onde nenhuma conta é encontrado
+            if (transaction.isActive()) {
+                transaction.rollback();
+            }
+            return false; // Conta não encontrada
+        } catch (RuntimeException e) {
+            if (transaction.isActive()) {
+                transaction.rollback();
+            }
+            throw e; // Re-throw exception
+        }
+    }
+
     public static int verificarContaRelacionada(int clienteId) {
+
+        try{
         var a = EntityFactory.getEntityManager();
 
         TypedQuery<Integer> query = a.createQuery(
@@ -80,6 +114,9 @@ public class ContaDAO {
         int result = c1;
         System.out.println(result);
         return result;
+        }catch (RuntimeException e) {
+                throw new RuntimeException(e);
+            }
 
     }
 
@@ -150,6 +187,7 @@ public class ContaDAO {
 
     public static boolean sacarSaldo(int id, double valor){
         EntityManager a = EntityFactory.getEntityManager();
+        ContaDAO contaDAO = new ContaDAO();
 
         try{
 
@@ -158,7 +196,7 @@ public class ContaDAO {
             if(contaPraSacar != null && valor < contaPraSacar.getSaldo().doubleValue()){
                 contaPraSacar.sacarSaldo(valor);
 
-                update(contaPraSacar);
+                contaDAO.update(contaPraSacar);
 
                 TransacaoDAO transacaoDAO = new TransacaoDAO();
 
@@ -176,9 +214,6 @@ public class ContaDAO {
 
 
     }
-
-
-
 
     public ContaEntity buscarNumeroConta(String numeroConta){
         try {
@@ -202,5 +237,26 @@ public class ContaDAO {
         }
     }
 
+    public String consultarConta(String numeroConta){
+        ContaDAO contaDAO = new ContaDAO();
+        ContaCorrenteDAO contaCorrenteDAO = new ContaCorrenteDAO();
+
+        ContaEntity contaEntity = contaDAO.buscarNumeroConta(numeroConta);
+        Cliente cliente = contaEntity.getCliente();
+        UsuarioEntity usuarioEntity = cliente.getUsuario();
+
+
+        if (contaCorrenteDAO.buscarContaCorrenteConta(contaEntity.getId()) != null){
+            ContaCorrente contaCorrente = contaCorrenteDAO.buscarContaCorrenteConta(contaEntity.getId());
+            return "Tipo da conta:  " + contaEntity.getTipoconta()  +
+                    "\nNome do cliente: " + usuarioEntity.getNome() +
+                    "\nCpf do cliente: " + usuarioEntity.getCpf() +
+                    "\nSaldo da conta: " + contaEntity.getSaldo() +
+                    "\nLimite disponivel: " + contaCorrente.getLimite() +
+                    "\nData de vencimento: " + contaCorrente.getData();
+        }
+
+        return "Essa conta não existe" ;
+    }
 
 }

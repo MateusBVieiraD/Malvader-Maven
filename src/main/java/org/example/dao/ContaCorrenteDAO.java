@@ -3,6 +3,7 @@ package org.example.dao;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 import org.example.config.EntityFactory;
+import org.example.controller.ContaController;
 import org.example.entity.ContaCorrente;
 import org.example.entity.ContaEntity;
 import org.example.entity.ContaPoupanca;
@@ -11,7 +12,6 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 public class ContaCorrenteDAO {
-    ContaCorrente contaCorrente = new ContaCorrente();
 
     private final EntityManager entityManager;
     public ContaCorrenteDAO() {
@@ -69,6 +69,7 @@ public class ContaCorrenteDAO {
     }
 
     public boolean criarContaCorrente(int id, LocalDate dataVencimento, BigDecimal limite){
+        ContaCorrente contaCorrente = new ContaCorrente();
         ContaCorrenteDAO contaCorrenteDAO = new ContaCorrenteDAO();
         contaCorrente.setData(dataVencimento);
         contaCorrente.setLimite(limite);

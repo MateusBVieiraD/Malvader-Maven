@@ -1,9 +1,7 @@
 package org.example.view;
 
 
-import org.example.controller.ContaController;
 import org.example.controller.ContaCorrenteController;
-import org.example.controller.ContaPoupancaController;
 import org.example.controller.UsuarioController;
 import org.example.entity.TipoConta;
 import org.example.entity.TipoUsuario;
@@ -21,7 +19,7 @@ public class ContaCorrenteF extends JPanel {
         var UserControl = new UsuarioController();
 
         setLayout(null);
-        setSize(1200, 900);
+        setSize(900, 1000);
         setBackground(new Color(255, 255, 255));
 
         var titulo = new JLabel("Criar conta corrente");
@@ -31,7 +29,7 @@ public class ContaCorrenteF extends JPanel {
         var dataVencimento = new JLabel("Data de vencimento (YYYY-MM-DD):");
         var nomeCliente = new JLabel("Nome do cliente:");
         var cpfCliente = new JLabel("CPF do cliente:");
-        var dataNascimento = new JLabel("Data de nascimento:");
+        var dataNascimento = new JLabel("Data de nascimento (YYYY-MM-DD):");
         var telefoneContato = new JLabel("Telefone de contato:");
         var enderecoCliente = new JLabel("Endereço do cliente:");
         var cepCliente = new JLabel("CEP:");
@@ -45,7 +43,15 @@ public class ContaCorrenteF extends JPanel {
         var agenciaText = new JTextField();
         var numeroContaText = new JTextField();
         var limiteC = new JTextField();
-        var vencimento = new JTextField();
+        JFormattedTextField vencimento;
+        try {
+            MaskFormatter vencimentoMask = new MaskFormatter("####-##-##");
+            vencimento = new JFormattedTextField(vencimentoMask);
+            vencimento.setColumns(10);
+        } catch(ParseException e) {
+            throw new RuntimeException(e);
+        }
+
         var nomeText = new JTextField();
 
         JFormattedTextField cpfText;
@@ -104,106 +110,106 @@ public class ContaCorrenteF extends JPanel {
         var criarBotao = new JButton("Criar");
         var botaoVoltar = new JButton("<");
 
-        botaoVoltar.setBounds(5, 5, 30, 30);
+        botaoVoltar.setBounds(5, 5, 45, 45);
         add(botaoVoltar);
 
         titulo.setBounds(450, 10, 350, 25);
         add(titulo, BorderLayout.CENTER);
 
-        agencia.setBounds(10, 25, 350, 25);
+        agencia.setBounds(10, 50, 350, 25);
         add(agencia);
 
-        agenciaText.setBounds(10, 50, 165, 25);
+        agenciaText.setBounds(10, 75, 165, 25);
         add(agenciaText);
 
-        numeroConta.setBounds(10, 75, 350, 25);
+        numeroConta.setBounds(10, 100, 350, 25);
         add(numeroConta);
 
-        numeroContaText.setBounds(10, 100, 165, 25);
+        numeroContaText.setBounds(10, 125, 165, 25);
         add(numeroContaText);
 
-        limiteConta.setBounds(10, 125, 350, 25);
+        limiteConta.setBounds(10, 150, 350, 25);
         add(limiteConta);
 
-        limiteC.setBounds(10, 150, 165, 25);
+        limiteC.setBounds(10, 175, 165, 25);
         add(limiteC);
 
-        dataVencimento.setBounds(10, 175, 350, 25);
+        dataVencimento.setBounds(10, 200, 350, 25);
         add(dataVencimento);
 
-        vencimento.setBounds(10, 200, 165, 25);
+        vencimento.setBounds(10, 225, 165, 25);
         add(vencimento);
 
-        nomeCliente.setBounds(10, 225, 350, 25);
+        nomeCliente.setBounds(10, 250, 350, 25);
         add(nomeCliente);
 
-        nomeText.setBounds(10, 250, 165, 25);
+        nomeText.setBounds(10, 275, 165, 25);
         add(nomeText);
 
-        cpfCliente.setBounds(10, 275, 350, 25);
+        cpfCliente.setBounds(10, 300, 350, 25);
         add(cpfCliente);
 
-        cpfText.setBounds(10, 300, 165, 25);
+        cpfText.setBounds(10, 325, 165, 25);
         add(cpfText);
 
-        dataNascimento.setBounds(10, 325, 350, 25);
+        dataNascimento.setBounds(10, 350, 350, 25);
         add(dataNascimento);
 
-        nascimentoText.setBounds(10, 350, 165, 25);
+        nascimentoText.setBounds(10, 375, 165, 25);
         add(nascimentoText);
 
-        telefoneContato.setBounds(10, 375, 350, 25);
+        telefoneContato.setBounds(10, 400, 350, 25);
         add(telefoneContato);
 
-        telefoneText.setBounds(10, 400, 165, 25);
+        telefoneText.setBounds(10, 425, 165, 25);
         add(telefoneText);
 
-        enderecoCliente.setBounds(10, 425, 165, 25);
+        enderecoCliente.setBounds(10, 450, 165, 25);
         add(enderecoCliente);
 
-        enderecoText.setBounds(10, 450, 165, 25);
+        enderecoText.setBounds(10, 475, 165, 25);
         add(enderecoText);
 
-        cepCliente.setBounds(10, 475, 350, 25);
+        cepCliente.setBounds(10, 500, 350, 25);
         add(cepCliente);
 
-        cepText.setBounds(10, 500, 165, 25);
+        cepText.setBounds(10, 525, 165, 25);
         add(cepText);
 
-        localCliente.setBounds(10, 525, 350, 25);
+        localCliente.setBounds(10, 550, 350, 25);
         add(localCliente);
 
-        localText.setBounds(10, 550, 165, 25);
+        localText.setBounds(10, 575, 165, 25);
         add(localText);
 
-        numeroCasa.setBounds(10, 575, 350, 25);
+        numeroCasa.setBounds(10, 600, 350, 25);
         add(numeroCasa);
 
-        numeroCasaText.setBounds(10, 600, 165, 25);
+        numeroCasaText.setBounds(10, 625, 165, 25);
         add(numeroCasaText);
 
-        bairroCliente.setBounds(10, 625, 350, 25);
+        bairroCliente.setBounds(10, 650, 350, 25);
         add(bairroCliente);
 
-        bairroText.setBounds(10, 650, 165, 25);
+        bairroText.setBounds(10, 675, 165, 25);
         add(bairroText);
 
-        cidadeCliente.setBounds(10, 675, 350, 25);
+        cidadeCliente.setBounds(10, 700, 350, 25);
         add(cidadeCliente);
 
-        cidadeText.setBounds(10, 700, 165, 25);
+        cidadeText.setBounds(10, 725, 165, 25);
         add(cidadeText);
 
-        estadoCliente.setBounds(10, 725, 350, 25);
+        estadoCliente.setBounds(10, 750, 350, 25);
         add(estadoCliente);
 
-        estadoText.setBounds(10, 750, 165, 25);
+        estadoText.setBounds(10, 775, 165, 25);
         add(estadoText);
 
-        senhaCliente.setBounds(10, 775, 350, 25);
+        senhaCliente.setBounds(10, 800, 350, 25);
         add(senhaCliente);
 
-        senhaClienteText.setBounds(10, 800, 165, 25);
+        senhaClienteText.setBounds(10, 825, 165, 25);
         add(senhaClienteText);
 
         criarBotao.setBounds(10, 900, 80, 30);
@@ -234,7 +240,7 @@ public class ContaCorrenteF extends JPanel {
             } else if(username.isEmpty()){
                 JOptionPane.showMessageDialog(frame, "O campo nome não foi preenchido!");
             } else if(UserControl.ValidarCpfConta(cpf, TipoConta.CORRENTE)){
-                JOptionPane.showMessageDialog(frame, "Já existe uma conta poupança com este cpf!");
+                JOptionPane.showMessageDialog(frame, "Já existe uma conta corrente com este cpf!");
             } else if(cpf.isEmpty()){
                 JOptionPane.showMessageDialog(frame, "O campo cpf não foi preenchido!");
             } else if (nascimento.isEmpty()) {
@@ -263,6 +269,8 @@ public class ContaCorrenteF extends JPanel {
                 JOptionPane.showMessageDialog(frame, "O campo limite da conta não foi preenchido!");
             } else {
                 boolean verificar = contaCorrenteController.criarContaC(cpf, senha, username, telefoneC, TipoUsuario.CLIENTE, LocalDate.parse(nascimento), cep, local, Integer.parseInt(numerocasa), bairro, cidade, estado, agenciaT, TipoConta.CORRENTE, LocalDate.parse(datavencimento), BigDecimal.valueOf(Double.parseDouble(limite)), "", "");
+                agenciaText.setText("");
+                numeroContaText.setText("");
                 numeroCasaText.setText("");
                 nomeText.setText("");
                 cpfText.setText("");
@@ -280,6 +288,9 @@ public class ContaCorrenteF extends JPanel {
                 limiteC.setText("");
                 if(verificar){
                     JOptionPane.showMessageDialog(frame, "Conta criada com sucesso!");
+                }
+                else{
+                    JOptionPane.showMessageDialog(frame, "Error ao criar a conta!");
                 }
             }
 

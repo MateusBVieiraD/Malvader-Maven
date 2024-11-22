@@ -37,7 +37,7 @@ public class ExtratoCSV {
 
             // Criar o arquivo CSV
             FileWriter out = new FileWriter("extrato.csv");
-            CSVPrinter printer = new CSVPrinter(out, CSVFormat.DEFAULT.withHeader("ID", "Codigo Transacao", "Cargo", "Nome"));
+            CSVPrinter printer = new CSVPrinter(out, CSVFormat.DEFAULT.withHeader("ID", "Tipo-transacao", "Data-Hora", "Valor", "Conta"));
 
             // Escrever os dados no CSV
             for (Transacao transacao : transacoes) {

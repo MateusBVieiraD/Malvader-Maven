@@ -4,9 +4,7 @@ import jakarta.persistence.*;
 
 import org.example.config.EntityFactory;
 import org.example.entity.Cliente;
-import org.example.entity.ContaEntity;
 import org.example.entity.UsuarioEntity;
-import org.example.modelo.Conta;
 
 public class ClienteDAO {
     private final EntityManager entityManager;
@@ -99,37 +97,41 @@ public class ClienteDAO {
         return retornoId;
     }
 
-    public int buscarporId(String user, String password){
+    public int buscarporId(String user, String password) {
 
-        TypedQuery<UsuarioEntity> query = entityManager.createQuery("SELECT u FROM UsuarioEntity u WHERE u.senha = :senha AND u.nome = :nome" , UsuarioEntity.class);
-        query.setParameter("senha", password);
-        query.setParameter("nome", user);
+        try {
+            TypedQuery<UsuarioEntity> query = entityManager.createQuery("SELECT u FROM UsuarioEntity u WHERE u.senha = :senha AND u.nome = :nome", UsuarioEntity.class);
+            query.setParameter("senha", password);
+            query.setParameter("nome", user);
 
-        UsuarioEntity test = query.getSingleResult();
+            UsuarioEntity test = query.getSingleResult();
 
-        int id = test.getId();
+            int id = test.getId();
 
-        return id;
-
+            return id;
+        } catch (RuntimeException e) {
+            return 0;
+        }
 
 
     }
 
-    public boolean buscarClienteId(String clienteId) {
+
+    public boolean validarUsuarioCpf(String cpf) {
         EntityTransaction transaction = entityManager.getTransaction();
 
         try {
             transaction.begin();
 
             // Consulta nativa para remover o cliente diretamente (sem verificar as dependências)
-            String query = "SELECT u FROM Cliente u WHERE u.id = :clienteId";
-            Cliente cliente = entityManager.createQuery(query, Cliente.class)
-                    .setParameter("clienteId", clienteId)
+            String query = "SELECT u FROM UsuarioEntity u WHERE u.cpf = :cpf";
+            UsuarioEntity usuarioEntity = entityManager.createQuery(query, UsuarioEntity.class)
+                    .setParameter("cpf", cpf)
                     .getSingleResult();
 
             transaction.commit();
 
-            return cliente != null;
+            return usuarioEntity != null;
         } catch (NoResultException e) {
             // Lida com o caso onde nenhum cliente é encontrado
             if (transaction.isActive()) {
@@ -147,12 +149,13 @@ public class ClienteDAO {
     public Cliente buscarClienteIdUsuario(int id){
 
         try {
-        return entityManager.createQuery("SELECT c FROM Cliente c WHERE c.id = :id", Cliente.class)
+        return entityManager.createQuery("SELECT c FROM Cliente c WHERE c.usuario.id = :id", Cliente.class)
                 .setParameter("id", id)
                 .getSingleResult();
         } catch (jakarta.persistence.NoResultException e) {
             return null;
         }
+
     }
 
 

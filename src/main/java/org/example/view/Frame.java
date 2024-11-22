@@ -39,9 +39,6 @@ public class Frame extends JFrame {
         var consultarDados = new ConsultarDados(this);
         var alterarDados = new AlterarDados(this);
         var gerarRelatorio = new GerarRelatoriosLogin(this);
-        var consultarConta = new ConsultarConta(this);
-        var consultarFuncionario = new ConsultarFuncionario(this);
-        var consultarCliente = new ConsultarCliente(this);
         var alterarConta = new AlterarConta(this);
         var alterarFuncionario = new AlterarFuncionario(this);
         var alterarCliente = new AlterarCliente(this);
@@ -74,9 +71,6 @@ public class Frame extends JFrame {
         container.add(consultarDados, "ConsultarDados");
         container.add(alterarDados, "AlterarDados");
         container.add(gerarRelatorio, "GerarRelatorio");
-        container.add(consultarConta, "ConsultarConta");
-        container.add(consultarFuncionario, "ConsultarFuncionario");
-        container.add(consultarCliente, "ConsultarCliente");
         container.add(alterarConta, "AlterarConta");
         container.add(alterarFuncionario, "AlterarFuncionario");
         container.add(alterarCliente, "AlterarCliente");

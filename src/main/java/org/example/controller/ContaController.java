@@ -3,9 +3,14 @@ package org.example.controller;
 import org.example.dao.*;
 import org.example.entity.*;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
+
 
 public class ContaController {
     private final ContaDAO contaDao = new ContaDAO();
+    ContaCorrenteDAO contaCorrenteDAO = new ContaCorrenteDAO();
+    ContaDAO contaDAO = new ContaDAO();
 
     public void cadastroConta(ContaEntity conta){
         contaDao.salvar(conta);
@@ -19,11 +24,9 @@ public class ContaController {
         contaDao.fechar();
     }
 
-    public void consultarConta(String numeroConta){
+    public String consultarConta(String numeroConta){
 
-        ContaEntity contaEntity = contaDao.buscarNumeroConta(numeroConta);
-
-        contaEntity.toString();
+        return contaDao.consultarConta(numeroConta);
 
     }
 
@@ -41,19 +44,42 @@ public class ContaController {
 
 
             return "Informações do usuario a ser deletado " +
-                ", nome='" + usuario.getNome() + '\'' +
-                ", cpf='" + usuario.getCpf() + '\'' +
-                ", dataNascimento=" + usuario.getDataNascimento() +
-                ", telefone='" + usuario.getTelefone() + '\'' +
-                ", tipoUsuario=" + usuario.getTipoUsuario() +
-                ", saldo= " + contaEntity.getSaldo() +
-                ", agencia= " + contaEntity.getAgencia() +
-                ", numero da conta= " + contaEntity.getNumeroConta() +
-                ", tipo da conta= " + contaEntity.getTipoconta();
+                ", \nnome='" + usuario.getNome() + '\'' +
+                ", \ncpf='" + usuario.getCpf() + '\'' +
+                ", \ndataNascimento=" + usuario.getDataNascimento() +
+                ", \ntelefone='" + usuario.getTelefone() + '\'' +
+                ", \ntipoUsuario=" + usuario.getTipoUsuario() +
+                ", \nsaldo= " + contaEntity.getSaldo() +
+                ", \nagencia= " + contaEntity.getAgencia() +
+                ", \nnumero da conta= " + contaEntity.getNumeroConta() +
+                ", \ntipo da conta= " + contaEntity.getTipoconta();
         }else{
             return "essa conta não existe";
         }
 
+    }
+
+    public boolean buscarContaId(String numeroId){
+        return contaDao.buscarporId(numeroId);
+    }
+
+    public boolean alterarConta(String numeroConta, TipoConta tipoConta, BigDecimal limite, LocalDate data){
+
+        ContaEntity contaEntity = contaDao.buscarNumeroConta(numeroConta);
+
+        if (contaCorrenteDAO.buscarContaCorrenteConta(contaEntity.getId()) != null){
+            ContaCorrente contaCorrente = contaCorrenteDAO.buscarContaCorrenteConta(contaEntity.getId());
+            contaEntity.setTipoconta(tipoConta);
+            contaCorrente.setLimite(limite);
+            contaCorrente.setData(data);
+            contaCorrenteDAO.update(contaCorrente);
+            contaDao.update(contaEntity);
+
+            return true;
+
+        }
+
+        return false;
     }
 
 }

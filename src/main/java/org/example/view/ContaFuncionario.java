@@ -29,14 +29,14 @@ public class ContaFuncionario extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 frame.Show("ContaPoupancaF");
-                frame.resizeFrame(900, 900);
+                frame.resizeFrame(900, 1000);
             }
         });
         contaCF.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 frame.Show("ContaCorrenteF");
-                frame.resizeFrame(900, 1200);
+                frame.resizeFrame(900, 1000);
             }
         });
 

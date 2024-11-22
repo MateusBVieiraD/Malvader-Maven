@@ -29,7 +29,6 @@ public class ControllerGeral {
                     return contaEntity.getId();
                 }
 
-
             }
 
 
@@ -48,9 +47,8 @@ public class ControllerGeral {
             int retornoStatus = funcionarioDAO.criarFuncionario(cargo, codigo, retornoIdUsuario);
             return retornoStatus;
 
-        }else{
-            System.out.println("Algo deu errado");
         }
+
         return 0;
     }
 
@@ -75,6 +73,10 @@ public class ControllerGeral {
                 if (contaCorrenteDAO.buscarContaCorrenteConta(contaEntity.getId()) != null){
                     ContaCorrente contaCorrente = contaCorrenteDAO.buscarContaCorrenteConta(contaEntity.getId());
                     contaCorrenteDAO.remover(contaCorrente);
+                    if(contaPoupancaDAO.buscarContaPoupancaConta(contaEntity.getId()) != null){
+                        ContaPoupanca contaPoupanca = contaPoupancaDAO.buscarContaPoupancaConta(contaEntity.getId());
+                        contaPoupancaDAO.remover(contaPoupanca);
+                    }
                 }else if(contaPoupancaDAO.buscarContaPoupancaConta(contaEntity.getId()) != null){
                     ContaPoupanca contaPoupanca = contaPoupancaDAO.buscarContaPoupancaConta(contaEntity.getId());
                     contaPoupancaDAO.remover(contaPoupanca);

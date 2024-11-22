@@ -91,6 +91,17 @@ public class UsuarioDAO {
         }
     }
 
+    public UsuarioEntity verificarExistenciaCpf(String cpf) {
+        try {
+            return entityManager.createQuery(
+                            "SELECT u FROM UsuarioEntity u WHERE u.cpf = :cpf", UsuarioEntity.class)
+                    .setParameter("cpf", cpf)
+                    .getSingleResult();
+        } catch (jakarta.persistence.NoResultException e) {
+            return null; // Retorna null se nenhum resultado for encontrado
+        }
+    }
+
     public boolean validarCpfParaConta(String cpf, TipoConta tipoConta) {
         try {
             String query = "SELECT u FROM UsuarioEntity u " +
@@ -109,30 +120,17 @@ public class UsuarioDAO {
         }
     }
 
-
-
-    public String consultarDados(String user, String password){
-
-        TypedQuery<UsuarioEntity> query = entityManager.createQuery("SELECT u FROM UsuarioEntity u WHERE u.senha = :senha AND u.nome = :nome" , UsuarioEntity.class);
-        query.setParameter("senha", password);
-        query.setParameter("nome", user);
-
-        UsuarioEntity usuarioEntity = query.getSingleResult();
-
-        return usuarioEntity.toString();
-
-
-
-
-    }
-
     public int consultarClienteRelacionado(int id) {
 
+        try{
         TypedQuery<Integer> query = entityManager.createQuery("SELECT cl.id FROM Cliente cl JOIN cl.usuario u WHERE u.id = :id", Integer.class);
         query.setParameter("id", id);
         int cl = query.getSingleResult();
         System.out.println(cl);
         return cl;
+            }catch(Exception e){
+                return 0;
+            }
 
     }
 

@@ -6,6 +6,7 @@ import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
 import org.example.config.EntityFactory;
 import org.example.entity.Relatorio;
+import org.example.entity.Transacao;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -31,19 +32,20 @@ public class RelatorioCSV {
             entityManager.getTransaction().begin();
 
             // Consulta para buscar os relatórios
-            TypedQuery<Relatorio> query = entityManager.createQuery("from Relatorio", Relatorio.class);
-            List<Relatorio> relatorios = query.getResultList();
-
+            TypedQuery<Transacao> queryTransacao = entityManager.createQuery("from Transacao", Transacao.class);
+            List<Transacao> transacoes = queryTransacao.getResultList();
             entityManager.getTransaction().commit();
 
             // Criação do novo arquivo CSV
             FileWriter out = new FileWriter(arquivoCSV);
-            CSVPrinter printer = new CSVPrinter(out, CSVFormat.DEFAULT.withHeader("ID", "Conteudo", "Tipo relatorio", "Timestamp", "Funcionario-ID", "Dados"));
+            CSVPrinter printer = new CSVPrinter(out, CSVFormat.DEFAULT.withHeader("ID", "Valores", "Tipo relatorio", "Timestamp", "Conta-ID"));
 
             // Preenche o CSV com os dados dos relatórios
-            for (Relatorio relatorio : relatorios) {
-                printer.printRecord(relatorio.getId(), relatorio.getConteudo(), relatorio.getTipoRelatorio(), relatorio.getTimestamp(), relatorio.getFuncionario().getId(), relatorio.getDados());
+            for (Transacao transacao : transacoes) {
+                printer.printRecord(transacao.getId(), transacao.getValor(), transacao.getTipoTransacao(), transacao.getDataHora(), transacao.getConta().getId());
             }
+
+
 
             printer.flush();
             printer.close();

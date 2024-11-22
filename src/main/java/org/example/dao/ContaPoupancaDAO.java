@@ -15,7 +15,6 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 public class ContaPoupancaDAO {
-    ContaPoupanca contaPoupanca = new ContaPoupanca();
 
     private final EntityManager entityManager;
 
@@ -74,6 +73,7 @@ public class ContaPoupancaDAO {
     }
 
     public boolean criarContaPoupanca(int id, BigDecimal taxaRendimento){
+        ContaPoupanca contaPoupanca = new ContaPoupanca();
         ContaPoupancaDAO contaPoupancaDAO = new ContaPoupancaDAO();
         contaPoupanca.setTaxaRendimento(taxaRendimento);
         ContaEntity contaEntity = entityManager.find(ContaEntity.class, id);

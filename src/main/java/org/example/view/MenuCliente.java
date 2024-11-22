@@ -1,12 +1,11 @@
 package org.example.view;
 
 import org.example.controller.ClienteController;
+import org.example.entity.TipoConta;
 import org.example.entity.TipoUsuario;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.IOException;
 
 public class MenuCliente extends JPanel {
@@ -105,7 +104,7 @@ public class MenuCliente extends JPanel {
             if(resultado == JOptionPane.OK_OPTION) {
                 if (clienteControl.login(Sessao.getUser(), senha, TipoUsuario.CLIENTE)) {
                     try {
-                        ClienteController.extrato(Sessao.getUser(), senha, TipoUsuario.CLIENTE);
+                        ClienteController.extrato();
                     } catch (IOException ex) {
                         throw new RuntimeException(ex);
                     }
@@ -121,8 +120,12 @@ public class MenuCliente extends JPanel {
         String senha = new String(senhaConfirm.getPassword());
         if(resultado == JOptionPane.OK_OPTION) {
             if (clienteControl.login(Sessao.getUser(), senha, TipoUsuario.CLIENTE)) {
-                String result = String.valueOf(clienteControl.saldo(Sessao.getUser(), senha));
-                JOptionPane.showMessageDialog(frame, result);
+                if(clienteControl.consultarLimite(Sessao.getUser(), senha) != -1){
+                    String limite = String.valueOf(clienteControl.consultarLimite(Sessao.getUser(), senha));
+                    JOptionPane.showMessageDialog(frame, limite);
+                } else {
+                  JOptionPane.showMessageDialog(frame, "Limite indisponível!");
+                }
             } else {
                 JOptionPane.showMessageDialog(frame, "Senha incorreta!");
             }

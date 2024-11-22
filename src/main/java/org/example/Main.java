@@ -8,6 +8,7 @@ import org.example.entity.*;
 import org.example.view.*;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 
@@ -20,7 +21,6 @@ public class Main {
 
         UsuarioDAO usuarioDAO = new UsuarioDAO();
 
-
         FuncionarioController funcionarioController = new FuncionarioController();
         ClienteController clienteController = new ClienteController();
         UsuarioController usuarioController = new UsuarioController();
@@ -31,8 +31,6 @@ public class Main {
         RelatorioController relatorioController = new RelatorioController();
         TransacaoController transacaoController = new TransacaoController();
 
-
-// Criando um novo funcionário
 
         UsuarioEntity usuario = new UsuarioEntity();
         usuario.setNome("Luis");
@@ -103,22 +101,6 @@ public class Main {
         //Fechar a conexão com o banco
 
         ControllerGeral controllerGeral = new ControllerGeral();
-
-
-        controllerGeral.criarConta("123456", "teste123", "Yago", "64132456", TipoUsuario.CLIENTE, LocalDate.parse("2024-10-12"), "798123", "Vicente Pires",  20, "vicente", "Brasilia", "DF", "BB", TipoConta.POUPANCA, "", "");
-        controllerGeral.criarConta("123456789", "teste123", "Mateus", "654654654654", TipoUsuario.CLIENTE, LocalDate.parse("2024-10-12"), "798123", "AC",  20, "AC", "Brasilia", "DF", "Malvader", TipoConta.CORRENTE,"","");
-
-
-        /*boolean teste = usuarioDAO.validarUsuario("Mateus","oiteste123");
-        System.out.println(teste);
-
-        clienteController.depositar("Mateus","oiteste123",100);
-
-        clienteController.saque("Mateus","oiteste123",600);
-*/
-
-        //ClienteController.extrato("Mateus","oiteste123");
-
 
 
 
