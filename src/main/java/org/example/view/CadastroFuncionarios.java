@@ -234,7 +234,7 @@ public class CadastroFuncionarios extends JPanel {
             } else if (senhaFuncionario.isEmpty()) {
                 JOptionPane.showMessageDialog(frame, "O campo senha não foi preenchido!");
             } else {
-                int verificacao = controlergeral.criarConta(cpfFuncionario, senhaFuncionario, nomeFuncionario, telefone, TipoUsuario.FUNCIONARIO, LocalDate.parse(dataNascimento), cep, local, Integer.parseInt(numeroCasa), bairro, cidade, estado, "", TipoConta.CORRENTE, cargo, codigoFuncionario);
+                int verificacao = controlergeral.criarConta(cpfFuncionario, senhaFuncionario, nomeFuncionario, telefone, TipoUsuario.FUNCIONARIO, LocalDate.parse(dataNascimento), cep, local, Integer.parseInt(numeroCasa), bairro, cidade, estado, "", TipoConta.CORRENTE, cargo, codigoFuncionario, "");
                 if(verificacao == 1){
                     JOptionPane.showMessageDialog(frame, "Conta cadastrada com sucesso!");
                     codigoFT.setText("");

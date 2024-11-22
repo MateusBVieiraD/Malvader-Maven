@@ -285,7 +285,7 @@ public class ContaPoupancaF extends JPanel {
             }else if (taxaRendimento.isEmpty()) {
                 JOptionPane.showMessageDialog(frame, "O campo da taxa não foi preenchido!");
             }else {
-                boolean verificar = contaPoupancaController.criarContaP(cpf, senha, username, telefoneC, TipoUsuario.CLIENTE, LocalDate.parse(nascimento), cep, local, Integer.parseInt(numerocasa), bairro, cidade, estado, agenciaT, TipoConta.POUPANCA, BigDecimal.valueOf(Double.parseDouble(taxaRendimento)), "","");
+                boolean verificar = contaPoupancaController.criarContaP(cpf, senha, username, telefoneC, TipoUsuario.CLIENTE, LocalDate.parse(nascimento), cep, local, Integer.parseInt(numerocasa), bairro, cidade, estado, agenciaT, TipoConta.POUPANCA, BigDecimal.valueOf(Double.parseDouble(taxaRendimento)), "","", numeroC);
                 agenciaText.setText("");
                 numeroContaText.setText("");
                 numeroCasaText.setText("");

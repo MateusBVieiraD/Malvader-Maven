@@ -268,7 +268,7 @@ public class ContaCorrenteF extends JPanel {
             } else if (limite.isEmpty()) {
                 JOptionPane.showMessageDialog(frame, "O campo limite da conta não foi preenchido!");
             } else {
-                boolean verificar = contaCorrenteController.criarContaC(cpf, senha, username, telefoneC, TipoUsuario.CLIENTE, LocalDate.parse(nascimento), cep, local, Integer.parseInt(numerocasa), bairro, cidade, estado, agenciaT, TipoConta.CORRENTE, LocalDate.parse(datavencimento), BigDecimal.valueOf(Double.parseDouble(limite)), "", "");
+                boolean verificar = contaCorrenteController.criarContaC(cpf, senha, username, telefoneC, TipoUsuario.CLIENTE, LocalDate.parse(nascimento), cep, local, Integer.parseInt(numerocasa), bairro, cidade, estado, agenciaT, TipoConta.CORRENTE, LocalDate.parse(datavencimento), BigDecimal.valueOf(Double.parseDouble(limite)), "", "", numeroC);
                 agenciaText.setText("");
                 numeroContaText.setText("");
                 numeroCasaText.setText("");

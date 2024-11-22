@@ -5,7 +5,9 @@ import org.example.controller.ContaController;
 import org.example.controller.FuncionarioController;
 
 import javax.swing.*;
+import javax.swing.text.MaskFormatter;
 import java.awt.*;
+import java.text.ParseException;
 
 public class ConsultarDados extends JPanel {
     public ConsultarDados(Frame frame){
@@ -53,10 +55,17 @@ public class ConsultarDados extends JPanel {
         });
 
         CCliente.addActionListener(e -> {
-            var numeroText = new JTextField();
-            int confirmacao = JOptionPane.showConfirmDialog(frame, numeroText, "Digite o número do CPF do cliente que deseja consultar:", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+            JFormattedTextField cpfCliente;
+            try {
+                MaskFormatter cpfmask = new MaskFormatter("###.###.###-##");
+                cpfCliente = new JFormattedTextField(cpfmask);
+                cpfCliente.setColumns(15);
+            } catch (ParseException a) {
+                throw new RuntimeException(a);
+            }
+            int confirmacao = JOptionPane.showConfirmDialog(frame, cpfCliente, "Digite o número do CPF do cliente que deseja consultar:", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
             if(confirmacao == JOptionPane.OK_OPTION) {
-                String numero = numeroText.getText();
+                String numero = cpfCliente.getText();
                 JOptionPane.showMessageDialog(frame, clienteController.consultarCliente(numero));
             }
         });

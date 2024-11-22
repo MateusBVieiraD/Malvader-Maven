@@ -100,31 +100,54 @@ public class ContaDAO {
     }
 
     public static int verificarContaRelacionada(int clienteId) {
+        try {
+            var entityManager = EntityFactory.getEntityManager();
 
-        try{
-        var a = EntityFactory.getEntityManager();
+            // Consultar conta corrente
+            TypedQuery<Integer> queryContaCorrente = entityManager.createQuery(
+                    "SELECT co.id FROM ContaEntity co JOIN co.cliente c WHERE c.id = :id AND co.tipoconta = 'CORRENTE'",
+                    Integer.class
+            );
+            queryContaCorrente.setParameter("id", clienteId);
 
-        TypedQuery<Integer> query = a.createQuery(
-                "SELECT co.id FROM ContaEntity co JOIN co.cliente c WHERE c.id = :id",
-                Integer.class
-        );
-        query.setParameter("id", clienteId);
-
-        int c1 = query.getSingleResult();
-        int result = c1;
-        System.out.println(result);
-        return result;
-        }catch (RuntimeException e) {
-                throw new RuntimeException(e);
+            // Verifica se existe conta corrente
+            Integer contaCorrente = null;
+            try {
+                contaCorrente = queryContaCorrente.getSingleResult();
+            } catch (NoResultException ignored) {
+                // Ignorar exceção para verificar conta poupança depois
             }
 
+            // Se conta corrente foi encontrada, retorna
+            if (contaCorrente != null) {
+                return contaCorrente;
+            }
+
+            // Consultar conta poupança
+            TypedQuery<Integer> queryContaPoupanca = entityManager.createQuery(
+                    "SELECT co.id FROM ContaEntity co JOIN co.cliente c WHERE c.id = :id AND co.tipoconta = 'POUPANCA'",
+                    Integer.class
+            );
+            queryContaPoupanca.setParameter("id", clienteId);
+
+            try {
+                return queryContaPoupanca.getSingleResult();
+            } catch (NoResultException e) {
+                // Caso nenhuma conta seja encontrada, retorna 0
+                return 0;
+            }
+        } catch (RuntimeException e) {
+            throw new RuntimeException("Erro ao verificar conta relacionada", e);
+        }
     }
 
-    public int criarConta(int id, String agencia, TipoConta tipoConta){
+
+
+    public int criarConta(int id, String agencia, TipoConta tipoConta, String numeroConta){
         ContaEntity conta = new ContaEntity();
         ContaDAO contaDAO = new ContaDAO();
         Cliente cliente = entityManager.find(Cliente.class, id);
-        conta.setNumeroConta(String.valueOf(id));
+        conta.setNumeroConta(numeroConta);
         conta.setAgencia(agencia);
         conta.setTipoconta(tipoConta);
         conta.setCliente(cliente);
@@ -135,27 +158,38 @@ public class ContaDAO {
     }
 
     public static BigDecimal verificarSaldo(int clienteId) {
+        try {
+            var entityManager = EntityFactory.getEntityManager();
 
-        try{
-            var a = EntityFactory.getEntityManager();
-
-            TypedQuery<BigDecimal> query = a.createQuery(
-                    "SELECT co.saldo FROM ContaEntity co JOIN co.cliente c WHERE c.id = :id",
+            // Verificar saldo da conta corrente
+            TypedQuery<BigDecimal> queryContaCorrente = entityManager.createQuery(
+                    "SELECT co.saldo FROM ContaEntity co JOIN co.cliente c WHERE c.id = :id AND co.tipoconta = 'CORRENTE'",
                     BigDecimal.class
             );
+            queryContaCorrente.setParameter("id", clienteId);
 
-            query.setParameter("id", clienteId);
+            BigDecimal saldoCorrente;
+            try {
+                saldoCorrente = queryContaCorrente.getSingleResult();
+                return saldoCorrente;
+            } catch (NoResultException e) {
+                // Caso não exista conta corrente, verifica saldo da poupança
+                TypedQuery<BigDecimal> queryContaPoupanca = entityManager.createQuery(
+                        "SELECT co.saldo FROM ContaEntity co JOIN co.cliente c WHERE c.id = :id AND co.tipoconta = 'POUPANCA'",
+                        BigDecimal.class
+                );
+                queryContaPoupanca.setParameter("id", clienteId);
 
-            BigDecimal c1 = query.getSingleResult();
-
-
-            return c1;
-
-
+                try {
+                    return queryContaPoupanca.getSingleResult();
+                } catch (NoResultException ex) {
+                    // Caso não tenha nenhuma das contas, retorna saldo zerado
+                    return BigDecimal.ZERO;
+                }
+            }
         } catch (RuntimeException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("Erro ao verificar saldo", e);
         }
-
     }
 
 
@@ -181,7 +215,7 @@ public class ContaDAO {
             }
             throw new RuntimeException("Erro ao atualizar o saldo da conta: " + e.getMessage(), e);
         } finally {
-            a.close(); // Fecha o EntityManager para liberar recursos
+            a.close();
         }
     }
 

@@ -1,5 +1,6 @@
 package org.example;
 
+import org.example.bancoController.FuncionarioCSV;
 import org.example.bancoController.RelatorioCSV;
 import org.example.bancoController.HibernateToCSV;
 import org.example.controller.*;
@@ -93,9 +94,10 @@ public class Main {
 //transacao
 
 
-        // Não sei o porque, mas ele tá dando error kkkkk
         HibernateToCSV hibernateToCSV = new HibernateToCSV();
         hibernateToCSV.exportarParaCSV();
+        FuncionarioCSV funcionarioCSV = new FuncionarioCSV();
+        funcionarioCSV.funcionarioCSV();
 
 
         //Fechar a conexão com o banco
