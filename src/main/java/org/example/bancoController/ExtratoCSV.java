@@ -8,6 +8,7 @@ import org.example.config.EntityFactory;
 import org.example.entity.Funcionario;
 import org.example.entity.Transacao;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
@@ -18,6 +19,12 @@ public class ExtratoCSV {
     // Método para exportar os dados do Hibernate (via JPA) para um arquivo CSV
     public void extratoCSV() throws IOException {
 
+        File arquivoCSV = new File("extrato.csv");
+
+        if (arquivoCSV.exists()) {
+            arquivoCSV.delete();
+            System.out.println("Arquivo CSV anterior excluído!");
+        }
 
         try {
             // Começar uma transação e fazer a consulta

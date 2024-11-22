@@ -79,10 +79,16 @@ public class UsuarioDAO {
         }
     }
 
-    public UsuarioEntity verificarExistenciaCpf(String cpf) {
-        return entityManager.createQuery("SELECT u FROM UsuarioEntity u WHERE u.cpf = :cpf", UsuarioEntity.class)
-                .setParameter("cpf", cpf)
-                .getSingleResult();
+    public UsuarioEntity verificarExistenciaCpf(String cpf, String nome) {
+        try {
+            return entityManager.createQuery(
+                            "SELECT u FROM UsuarioEntity u WHERE u.cpf = :cpf AND u.nome = :nome", UsuarioEntity.class)
+                    .setParameter("cpf", cpf)
+                    .setParameter("nome", nome)
+                    .getSingleResult();
+        } catch (jakarta.persistence.NoResultException e) {
+            return null; // Retorna null se nenhum resultado for encontrado
+        }
     }
 
     public boolean validarCpfParaConta(String cpf, TipoConta tipoConta) {

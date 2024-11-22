@@ -8,8 +8,6 @@ import org.example.entity.TipoUsuario;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.Objects;
 
@@ -90,26 +88,22 @@ public class MenuFuncionario extends JPanel {
             frame.Show("ConsultarDados");
         });
 
-        alterarFB.addActionListener(e -> {
-            frame.Show("AlterarDados");
-        });
+        alterarFB.addActionListener(e -> frame.Show("AlterarDados"));
 
-        cadastroFB.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
+        cadastroFB.addActionListener(e -> {
                 frame.Show("CadastroFuncionarios");
                 frame.resizeFrame(900, 900);
-            }
         });
 
         gerarFB.addActionListener(e -> {
             JPasswordField senhaConfirm = new JPasswordField();
+            var funcionarioController = new FuncionarioController();
             int resultado = JOptionPane.showConfirmDialog(frame, senhaConfirm, "Confirme sua senha:", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
             String senha = new String(senhaConfirm.getPassword());
             if(resultado == JOptionPane.OK_OPTION) {
                 if (usuarioController.login(Sessao.getUser(), senha, TipoUsuario.FUNCIONARIO)) {
                     try {
-                        FuncionarioController.gerarRelatorio(Sessao.getUser(), senha, TipoUsuario.FUNCIONARIO);
+                        funcionarioController.gerarRelatorio(Sessao.getUser(), senha, TipoUsuario.FUNCIONARIO);
                     } catch (IOException ex) {
                         throw new RuntimeException(ex);
                     }

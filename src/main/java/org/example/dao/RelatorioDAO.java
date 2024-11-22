@@ -1,12 +1,9 @@
 package org.example.dao;
 
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
-import jakarta.persistence.Persistence;
 import org.example.config.EntityFactory;
 import org.example.entity.Relatorio;
-import org.example.entity.UsuarioEntity;
 
 public class RelatorioDAO {
     private final EntityManager entityManager;
@@ -44,6 +41,8 @@ public class RelatorioDAO {
             throw new RuntimeException("Falha ao atualizar o relatório", e); // Re-throw exception
         }
     }
+
+
 
     public void fechar() {
         entityManager.close();

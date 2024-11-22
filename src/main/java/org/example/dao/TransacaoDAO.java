@@ -10,6 +10,8 @@ import org.example.entity.Transacao;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.time.Instant;
+import java.time.LocalDateTime;
+import java.util.List;
 
 public class TransacaoDAO {
     private final EntityManager entityManager;
@@ -68,14 +70,12 @@ public class TransacaoDAO {
 
     }
 
-    public Transacao buscarTransacaoConta(int id){
-        try {
-            return entityManager.createQuery("SELECT e FROM Transacao e WHERE e.conta = :id", Transacao.class)
-                    .setParameter("id", id)
-                    .getSingleResult();
-        } catch (Exception e) {
-            return null;
-        }
+    public List<Transacao> buscarTransacoes(int idConta) {
+        TypedQuery<Transacao> query = entityManager.createQuery(
+                "SELECT t FROM Transacao t WHERE t.conta.id = :id ", Transacao.class);
+        query.setParameter("id", idConta);
+
+        return query.getResultList();
     }
 
     public void fechar() {

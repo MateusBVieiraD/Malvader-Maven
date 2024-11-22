@@ -17,4 +17,5 @@ public class RelatorioController {
     public void fecharOperacao(){
         relatorioDao.fechar();
     }
+
 }

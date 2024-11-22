@@ -191,5 +191,16 @@ public class ContaDAO {
         }
     }
 
+    public ContaEntity buscarNumeroConta(int id){
+        try {
+            return entityManager.createQuery("SELECT c FROM ContaEntity c WHERE c.numeroConta = :idConta", ContaEntity.class)
+                    .setParameter("idConta", id)
+                    .getSingleResult();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
 
 }

@@ -35,7 +35,6 @@ public class Frame extends JFrame {
         var contaFuncionario = new ContaFuncionario(this);
         var contaCorrenteF = new ContaCorrenteF(this);
         var contaPoupancaF = new ContaPoupancaF(this);
-        var encerrarConta = new EncerramentoConta(this);
         var cadastroFuncionarios = new CadastroFuncionarios(this);
         var consultarDados = new ConsultarDados(this);
         var alterarDados = new AlterarDados(this);
@@ -71,7 +70,6 @@ public class Frame extends JFrame {
         container.add(contaFuncionario, "ContaFuncionario");
         container.add(contaPoupancaF, "ContaPoupancaF");
         container.add(contaCorrenteF, "ContaCorrenteF");
-        container.add(encerrarConta, "EncerrarConta");
         container.add(cadastroFuncionarios, "CadastroFuncionarios");
         container.add(consultarDados, "ConsultarDados");
         container.add(alterarDados, "AlterarDados");

@@ -121,6 +121,7 @@ public class Main {
 
 
 
+
         funcionarioController.fecharOperacao();
         clienteController.fecharOperacao();
         usuarioController.fecharOperacao();

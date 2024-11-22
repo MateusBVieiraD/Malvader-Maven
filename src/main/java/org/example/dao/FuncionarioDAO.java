@@ -2,6 +2,7 @@ package org.example.dao;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
+import jakarta.persistence.TypedQuery;
 import org.example.config.EntityFactory;
 import org.example.entity.Funcionario;
 import org.example.entity.UsuarioEntity;
@@ -55,6 +56,12 @@ public class FuncionarioDAO {
         int retornoStatus = salvar(funcionario);
         return retornoStatus;
 
+    }
+
+    public Funcionario buscarFuncionarioPorId(int id){
+         return entityManager.createQuery("SELECT f FROM Funcionario f JOIN f.usuario u WHERE u.id = :id", Funcionario.class)
+                 .setParameter("id", id)
+                 .getSingleResult();
     }
 
 
